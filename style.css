@@ -1,0 +1,75 @@
+.important{
+  color:green;
+}
+
+html
+{
+  font-size:100%
+
+}
+body{
+  margin:0;
+  font-family:Merienda, "Comic sans MS";
+}
+  h1{
+
+  font-size:4.5em;
+  padding-left:0.7em;
+}
+.hautdepage{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+header{
+    background-color:#f3e9f1;
+}
+nav li, nav a{
+  text-decoration:none;
+  list-style-type:none;
+}
+nav ul.row{
+  display:flex;
+}
+.hautdepage__btn__deroulant {
+  display:none;
+  position:absolute;
+  z-index:1000;
+  }
+  nav> ul.row li:hover .hautdepage__btn__deroulant{
+      display:block;
+    }
+.produit{
+      display:flex;
+      justify-content:center;
+      padding:2em;
+          }
+.cadre-img {
+              min-width:500px;
+              max-width:500px;
+              margin:2em 0em 2em 10em;
+              border: 0.2em solid #f3e9f1;
+              border-radius:1em;
+              overflow: hidden;
+          }
+          .produit img:hover{
+            transform: scaleY(1.2);
+
+          }
+          .cadre-pdt{
+            margin:5em 10em 5em 0em;
+            background-color: #f3e9f1;
+            padding:2em;
+            border-radius:1em;
+                    }
+h2 {
+
+    background-image:linear-gradient(to bottom right , #e38913, #8f5bfe);
+    border-radius:1em;
+    padding:0.3em;
+    display:inline;
+}
+#Bear-1, #Bear-2, #Bear-3, #Bear-0, #Bear-4, #Bear{
+    text-align:center;
+}
