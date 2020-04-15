@@ -1,3 +1,7 @@
+#panier>produit{
+ padding:2em;
+  }
+
 .important{
   color:green;
 }
@@ -29,8 +33,10 @@ nav li, nav a{
   text-decoration:none;
   list-style-type:none;
 }
-nav ul.row{
+.row{
   display:flex;
+  justify-content:space-between;
+  padding:2em;
 }
 .hautdepage__btn__deroulant {
   display:none;
@@ -72,4 +78,17 @@ h2 {
 }
 #Bear-1, #Bear-2, #Bear-3, #Bear-0, #Bear-4, #Bear{
     text-align:center;
+}
+.qte, .add-to-cart, #qte{
+  margin:2em 2em 5em 2em;
+  background-color: #f3e9f1;
+  border-radius:2em;
+  border-color:#c57dee;
+  font-size:1.5em;
+}
+.dropdown:hover > #cart-dropdown{
+    display: block;
+}
+th{
+padding:4em;
 }

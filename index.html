@@ -9,6 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="favicon.jpg" >
 	  <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
 
 	  <!--cript src="controllers/teddy.js" defer></script>
 	  <script src="models/Teddy.js" defer></script>
@@ -29,15 +30,22 @@
          <li class="hautdepage__btn"><a href="#produits">NOS PRODUITS &ensp;</a>
             <ul>
               <li class="hautdepage__btn__deroulant"><a href="#ours">Ours en peluche</a></li>
-              <li class="hautdepage__btn__deroulant"><a href="#cameras"> Caméras</a></li>
-              <li class="hautdepage__btn__deroulant"> <a href="#meubles">Meubles en chêne</a></li>
+              <!--<li class="hautdepage__btn__deroulant"><a href="#cameras"> Caméras</a></li>
+              <li class="hautdepage__btn__deroulant"> <a href="#meubles">Meubles en chêne</a></li>-->
             </ul>
           </li>
-         <li class="hautdepage__btn"><a href="#panier">PANIER &ensp;</a></li>
-       </ul>
-    </nav>
+         <li class="hautdepage__btn dropdown"><a href="panier.html"><i class="fas fa-shopping-cart fa-2x"></i>PANIER &ensp;</a>
+            <div id="panier">
+                <p id="produits_panier"></p>
+                <p id="nbe-articles">0</p>
+            </div>
+            <a href="panier.html">Voir le panier</a></li>
+
+         </li>
+     </ul>
+   </nav>
 </header>
-<body>
+<body onload="affichage_produits(),recup_panier()">
   <!--
   <form id="form">
       <label>Saisissez une valeur <input type="text" id="value" /></label><br />
@@ -99,7 +107,7 @@
     <h2>Ours en peluche <span class="name"></span></h2>
     <div class="produit">
       <div class="cadre-img">
-        <a href="teddy_perso.html"><img src="" alt="ours en peluche Calinours" /></a>
+        <a href=""><img src="" alt="ours en peluche Calinours" /></a>
       </div>
       <div class="cadre-pdt">
         <p> </p>
@@ -111,7 +119,7 @@
     <h2>Ours en peluche <span class="name"></span></h2>
     <div class="produit">
       <div class="cadre-img">
-        <a href="teddy_perso.html"><img src="" alt="ours en peluche Calinours" /></a>
+        <a href=""><img src="" alt="ours en peluche Calinours" /></a>
       </div>
       <div class="cadre-pdt">
         <p> </p>
@@ -123,7 +131,7 @@
     <h2>Ours en peluche <span class="name"></span></h2>
     <div class="produit">
       <div class="cadre-img">
-        <a href="teddy_perso.html"><img src="" alt="ours en peluche Calinours" /></a>
+        <a href=""><img src="" alt="ours en peluche Calinours" /></a>
       </div>
       <div class="cadre-pdt">
         <p> </p>
@@ -135,7 +143,7 @@
     <h2>Ours en peluche <span class="name"></span></h2>
     <div class="produit">
       <div class="cadre-img">
-        <a href="teddy_perso.html"><img src="" alt="ours en peluche" /></a>
+        <a href=""><img src="" alt="ours en peluche" /></a>
       </div>
       <div class="cadre-pdt">
         <p> </p>
