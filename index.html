@@ -19,146 +19,94 @@
     <script src="main.js" defer> </script>
 </head>
 
-
-<header>
-<div class="hautdepage">
-  <img src="images/logo.png" alt="logo d'Orinoco"/>
-  <h1>Orinoco</h1>
-</div>
-		<nav>
-      <ul class="row">
-         <li class="hautdepage__btn"><a href="#produits">NOS PRODUITS &ensp;</a>
-            <ul>
-              <li class="hautdepage__btn__deroulant"><a href="#ours">Ours en peluche</a></li>
-              <!--<li class="hautdepage__btn__deroulant"><a href="#cameras"> Caméras</a></li>
-              <li class="hautdepage__btn__deroulant"> <a href="#meubles">Meubles en chêne</a></li>-->
-            </ul>
-          </li>
-         <li class="hautdepage__btn dropdown"><a href="panier.html"><i class="fas fa-shopping-cart fa-2x"></i>PANIER &ensp;</a>
-            <div id="panier">
-                <p id="produits_panier"></p>
-                <p id="nbe-articles">0</p>
+<body onload="affichage_produits(), recup_panier()">
+  <header>
+  <div class="hautdepage">
+    <img src="images/logo.png" alt="logo d'Orinoco"/>
+    <h1>Orinoco</h1>
+  </div>
+  		<nav>
+        <ul class="row">
+          <li class="hautdepage__btn"><a href="index.html">NOS PRODUITS &ensp;</a>
+             <ul class="hautdepage__btn__deroulant">
+               <li><a href="index.html">Ours en peluche</a></li>
+               <li>Caméras</li>
+               <li>Meubles en chêne</li>
+             </ul>
+           </li>
+           <li id="commande" class="hautdepage__btn dropdown"><a href="panier.html #panier">PANIER &ensp;</a>
+            <div id="panier_style" class="tourni">
+              <table id="panier">
+             </table>
             </div>
-            <a href="panier.html">Voir le panier</a></li>
-
-         </li>
-     </ul>
-   </nav>
-</header>
-<body onload="affichage_produits(),recup_panier()">
-  <!--
-  <form id="form">
-      <label>Saisissez une valeur <input type="text" id="value" /></label><br />
-      <input id="essai" type="submit" value="Envoyer"  />
-    </form>
-    <div id="result"></div>
-    <form id="form-to-check">
-     <p>
-       <label>Code : <input type="text" name="code" id="code" /></label><br />
-       <div class="result" id="code-validation"></div>
-     </p>
-     <p>
-       <label>Email : <input type="email" name="email" required/></label>
-     </p>
-     <p>
-        <input type="submit" value="Vérifier" id="submit-btn" />
-     </p>
-   </form>
-
-
-  <div><button id="ask-weather">Quelle est la météo sur Paris ?</button></div>
-    <div id="weather-result"></div>
-  <form>
-     <div><input type="text" id="name" placeholder="Nom" /></div>
-     <div>
-       <select id="gender">
-         <option>Choisissez une valeur</option>
-         <option value="male">Homme</option>
-         <option value="female">Femme</option>
-         <option value="other">Autre</option>
-       </select>
-     </div>
-   </form>
-
-   <div id="result">
-     Nom : <span id="res-name"></span><br />
-     Genre : <span id="res-gender"></span><br />
-     Souris : (<span id="mouse-x"></span>, <span id="mouse-y"></span>)
-   </div>
-   <div id="parent"><article>Parent</article></br>
-    <div id="enfant"><a href=page2.html>Enfant</a></div></br>
-  </div>
-  <div id="parentCount"></br></div>
-    <div id="enfantCount"></div>-->
-
-  <div id="Bear-0">
-    <h2>Ours en peluche <span class="name"></span></h2>
-    <div class="produit">
-      <div class="cadre-img">
-        <a href=""><img src="" alt="ours en peluche" /></a>
+          </li>
+       </ul>
+     </nav>
+  </header>
+    <div id="Bear-0">
+      <h2>Ours en peluche <span class="name"></span></h2>
+      <div class="produit">
+        <div class="cadre-img">
+          <a href=""><img src="" alt="ours en peluche" /></a>
+        </div>
+        <div class="cadre-pdt">
+          <p> </p>
+          <div class="prix">Prix: <span></span> €</div>
+        </div>
       </div>
-      <div class="cadre-pdt">
-        <p> </p>
-        <div class="prix">Prix: <span></span> €</div>
     </div>
-    </div>
-  </div>
-  <div id="Bear-1">
-    <h2>Ours en peluche <span class="name"></span></h2>
-    <div class="produit">
-      <div class="cadre-img">
-        <a href=""><img src="" alt="ours en peluche Calinours" /></a>
+    <div id="Bear-1">
+      <h2>Ours en peluche <span class="name"></span></h2>
+      <div class="produit">
+        <div class="cadre-img">
+          <a href=""><img src="" alt="ours en peluche Calinours" /></a>
+        </div>
+        <div class="cadre-pdt">
+          <p> </p>
+          <div class="prix">Prix: <span></span> €</div>
+        </div>
       </div>
-      <div class="cadre-pdt">
-        <p> </p>
-        <div class="prix">Prix: <span></span> €</div>
     </div>
-    </div>
-  </div>
-  <div id="Bear-2">
-    <h2>Ours en peluche <span class="name"></span></h2>
-    <div class="produit">
-      <div class="cadre-img">
-        <a href=""><img src="" alt="ours en peluche Calinours" /></a>
+    <div id="Bear-2">
+      <h2>Ours en peluche <span class="name"></span></h2>
+      <div class="produit">
+        <div class="cadre-img">
+          <a href=""><img src="" alt="ours en peluche Calinours" /></a>
+        </div>
+        <div class="cadre-pdt">
+          <p> </p>
+          <div class="prix">Prix: <span></span> €</div>
+        </div>
       </div>
-      <div class="cadre-pdt">
-        <p> </p>
-        <div class="prix">Prix: <span></span> €</div>
     </div>
-    </div>
-  </div>
-  <div id="Bear-3">
-    <h2>Ours en peluche <span class="name"></span></h2>
-    <div class="produit">
-      <div class="cadre-img">
-        <a href=""><img src="" alt="ours en peluche Calinours" /></a>
+    <div id="Bear-3">
+      <h2>Ours en peluche <span class="name"></span></h2>
+      <div class="produit">
+        <div class="cadre-img">
+          <a href=""><img src="" alt="ours en peluche Calinours" /></a>
+        </div>
+        <div class="cadre-pdt">
+          <p> </p>
+          <div class="prix">Prix: <span></span> €</div>
+        </div>
       </div>
-      <div class="cadre-pdt">
-        <p> </p>
-        <div class="prix">Prix: <span></span> €</div>
     </div>
-    </div>
-  </div>
-  <div id="Bear-4">
-    <h2>Ours en peluche <span class="name"></span></h2>
-    <div class="produit">
-      <div class="cadre-img">
-        <a href=""><img src="" alt="ours en peluche" /></a>
+    <div id="Bear-4">
+      <h2>Ours en peluche <span class="name"></span></h2>
+      <div class="produit">
+        <div class="cadre-img">
+          <a href=""><img src="" alt="ours en peluche" /></a>
+        </div>
+        <div class="cadre-pdt">
+          <p> </p>
+          <div class="prix">Prix: <span></span> €</div>
+        </div>
       </div>
-      <div class="cadre-pdt">
-        <p> </p>
-        <div class="prix">Prix: <span></span> €</div>
     </div>
-    </div>
-  </div>
 
-<footer>
+  <footer>
 
-</footer>
-
-
-</li>
-
+  </footer>
 
 </body>
 </html>

@@ -9,73 +9,85 @@
 	  <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
     <script src="panier.js" defer> </script>
-  </head>
+</head>
 
-
-<header>
-<div class="hautdepage">
-  <img src="images/logo.png" alt="logo d'Orinoco"/>
-  <h1>Orinoco</h1>
-</div>
-		<nav>
+<body onload="recup_panier(), panier_commande()">
+  <header>
+    <div class="hautdepage">
+      <img src="images/logo.png" alt="logo d'Orinoco"/>
+      <h1>Orinoco</h1>
+    </div>
+    <nav>
       <ul class="row">
-         <li class="hautdepage__btn"><a href="#produits">NOS PRODUITS &ensp;</a>
-            <ul>
-              <li class="hautdepage__btn__deroulant"><a href="#ours">Ours en peluche</a></li>
-              <!--<li class="hautdepage__btn__deroulant"><a href="#cameras"> Caméras</a></li>
-              <li class="hautdepage__btn__deroulant"> <a href="#meubles">Meubles en chêne</a></li>-->
+         <li class="hautdepage__btn"><a href="index.html">NOS PRODUITS &ensp;</a>
+            <ul class="hautdepage__btn__deroulant">
+              <li><a href="index.html">Ours en peluche</a></li>
+              <li>Caméras</li>
+              <li>Meubles en chêne</li>
             </ul>
           </li>
-         <li class="hautdepage__btn"><a href="panier.html"><i class="fas fa-shopping-cart"></i>PANIER &ensp;</a>
-         </li>
-     </ul>
-    </nav>
-</header>
-<body  onLoad="stockage_achats(),compute(), testPromise()">
-  <div  class="container">
-    <article class="well form-inline pull-left col-lg-5">
-      <legend>Gestion du panier</legend>
-        <label class="col-lg-3">Identifiant</label> : <input type = "number" id = "id" style="width:120px" class="input-sm form-control"></input><br><br>
-        <label class="col-lg-3" >Produit</label> : <input type = "number" id = "name" style="width:120px" class="input-sm form-control"></input><br><br>
-        <label class="col-lg-3" >Quantité</label> : <input type = "number" id = "qte" style="width:120px" class="input-sm form-control"></input><br><br>
-        <label class="col-lg-3">Prix</label> : <input type = "number" id = "prix" style="width:120px" class="input-sm form-control"></input><br><br>
-        <button class="btn btn-primary" type="submit" onclick="ajouter()"><span class="glyphicon glyphicon-shopping-cart"></span> Ajouter au panier</button>
-    </article>
-  </div>
+          <li id="commande" class="hautdepage__btn dropdown"><a href="panier.html #panier">PANIER &ensp;</a>
+            <div id="panier_style" class="tourni">
+              <table id="panier">
+              </table>
+            </div>
+          </li>
+        </ul>
+      </nav>
+  </header>
   <div class="container">
-    <article class="well form-inline pull-left col-lg-5">
-      <legend>Contenu du panier</legend>
-      <table id="tableau" class="table">
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Qte</th>
-            <th>Prix unitaire</th>
-            <th>Prix de la ligne</th>
-            <th>Supprimer</th>
-          </tr>
-        </thead>
-        <tr>
-          <td id="produit-0"></td>
-        </tr>
-        <tr>
-          <td id="produit-1"></td>
-        </tr>
-        <tr>
-          <td id="produit-2"></td>
-        </tr>
-        <tr>
-          <td id="produit-3"></td>
-        </tr>
-        <tr>
-          <td id="produit-4"></td>
-        </tr>
-      </table>
-      <br><label>Prix du panier total</label> : <label id = "prixTotal"></label>
-      <label id = "nbreLignes" hidden>0</label>
-    </article>
+    <section id="table_panier">
+        <h2> Votre panier:</h2>
+         <table id="panier_commande">
+          <thead>
+            <tr>
+              <th id="pdt_commande">Produits</th>
+              <th id="prix">Prix unitaire</th>
+              <th id="qte_commande">Quantité</th>
+              <th id="total_par_produit">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <tfoot>
+            <tr id="totalHT">
+              <td colspan="3">Total HT</td>
+            </tr>
+            <tr id="tva">
+              <td colspan="3">TVA</td>
+            </tr>
+            <tr id="ttc">
+              <td colspan="3"> Net à payer</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+      <div id="formulaire">
+        <p> Pour pouvoir valider votre commande, veuillez remplir toutes les rubriques de ce formulaire, merci! </p>
+        <form method="post" action="traitement.php" id="form_1">
+          <div class="form-group">
+            <label class="label" for="name">	Nom	</label>
+            <input type="text" name="name" id="name" title="nom" class="form-control" required />
+          </div>
+          <div class="form-group">
+              <label class="label" for="lastname">	Prénom	</label>
+              <input type="text" name="lastname" id="lastname" title="prénom" class="form-control" required />
+          </div>
+          <div class="form-group">
+              <label class="label" for="adresse">	Adresse	</label>
+              <input type="text" name= "adresse" id="adresse" title=" adresse" class="form-control" required  />
+          </div>
+          <div class="form-group">
+              <label class="label" for="ville">	Ville	</label>
+              <input type="text" name= "ville" id="ville" title=" ville" class="form-control" required  />
+          </div>
+          <div class="form-group">
+              <label class="label" for="email">	Adresse email	</label>
+              <input type="email" name="email" id="email" title= "adresse mail" class="form-control" required />
+          </div>
+         <button class="button" type="submit">Passer la commande </button>
+       </form>
+     </div>
   </div>
-<button id="confirm-command">Passer la commande</button>
-
 </body>
 </html>
