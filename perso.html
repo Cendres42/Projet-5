@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr" xml:lang="fr" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>Orinoco nouveau site de vente en ligne par catégories</title>
+    <meta name="description" content="Site de vente en ligne qui vous permet de choisir la catégorie d'articles qui vous intéresse afin qu'on ne vous présente pas d'articles non pertinents">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="shortcut icon" type="image/png" href="favicon.jpg" >
+	  <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
+    <script src="perso.js" defer> </script>
+</head>
+
+<body onload="recup_panier()">
+<header>
+  <div class="hautdepage">
+    <img src="images/logo.png" alt="logo d'Orinoco"/>
+    <h1>Orinoco</h1>
+  </div>
+  <nav>
+    <ul class="row">
+      <li class="hautdepage__btn"><a href="index.html">NOS PRODUITS &ensp;</a>
+         <ul class="hautdepage__btn__deroulant">
+           <li><a href="index.html">Ours en peluche</a></li>
+           <li>Caméras</li>
+           <li>Meubles en chêne</li>
+         </ul>
+       </li>
+       <li id="commande" class="hautdepage__btn dropdown"><a href="panier.html #panier">PANIER &ensp;</a>
+        <div id="panier_style" class="tourni">
+          <table id="panier">
+          </table>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+<div id="Bear" >
+    <h2>Ours en peluche <span class="name"></span></h2>
+    <div class="produit">
+      <div class="cadre-img">
+        <a href="teddy_perso.html"><img src="" alt="ours en peluche" /></a>
+      </div>
+      <div class="cadre-pdt">
+        <p><span class="description"></span> </p>
+        <div class="prix">Prix: <span></span> €
+        </div>
+        <p>Personnalisez votre Ours</p>
+        <form>
+          <select name="couleur" size="1">
+          </select>
+        </form>
+      </div>
+    </div>
+    <label for="q">Quantité: </label>
+      <select id="qt" name="q" size="1">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    <button id="ajout-panier" type="button" class="add-to-cart"> <a href="#commande">Ajouter au panier</a></button>
+  </div>
+</body>
+</html>
