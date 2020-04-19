@@ -103,3 +103,5 @@ function recup_panier(){
     nouvelle_qte.innerHTML= new_product.qte;
   }
 }
+
+window.addEventListener("load", recup_panier());

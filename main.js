@@ -1,5 +1,5 @@
-//fonction d'affichage des produits
 
+//fonction d'affichage des produits
 let response=[];
 
 function affichage_produits(){
@@ -51,3 +51,8 @@ function recup_panier(){
     nouvelle_qte.innerHTML= new_product.qte;
     }
 }
+
+window.addEventListener("load", function(){
+   affichage_produits(),
+   recup_panier()
+});

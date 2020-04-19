@@ -11,7 +11,7 @@
     <script src="panier.js" defer> </script>
 </head>
 
-<body onload="recup_panier(), panier_commande()">
+<body>
   <header>
     <div class="hautdepage">
       <img src="images/logo.png" alt="logo d'Orinoco"/>
@@ -64,7 +64,7 @@
       </section>
       <div id="formulaire">
         <p> Pour pouvoir valider votre commande, veuillez remplir toutes les rubriques de ce formulaire, merci! </p>
-        <form method="post" action="traitement.php" id="form_1">
+        <form   id="form_1"> <!--method="post" action="http://localhost:3000/api/teddies"-->
           <div class="form-group">
             <label class="label" for="name">	Nom	</label>
             <input type="text" name="name" id="name" title="nom" class="form-control" required />
@@ -85,7 +85,7 @@
               <label class="label" for="email">	Adresse email	</label>
               <input type="email" name="email" id="email" title= "adresse mail" class="form-control" required />
           </div>
-         <button class="button" type="submit">Passer la commande </button>
+         <button id="envoi" class="button" type="submit">Passer la commande </button>
        </form>
      </div>
   </div>
