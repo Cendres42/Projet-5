@@ -9,6 +9,8 @@
 	  <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
     <script src="perso.js" defer> </script>
+    <script src="main.js" defer> </script>
+
 </head>
 
 <body>
@@ -62,5 +64,32 @@
       </select>
     <button id="ajout-panier" type="button" class="add-to-cart"> <a href="#commande">Ajouter au panier</a></button>
   </div>
+
+
+    <script type="text/javascript">
+            window.addEventListener("load", function(){
+      // récupération dans la barre d'adresse de l'id-produit
+              let adresse=window.location.search;
+              let id=(adresse.replace('?product_id=', ''));
+              let promise=Produits.getById(id);
+              promise.then(function(ours){
+                let qs = "#Bear h2 span.name";
+                document.querySelector(qs).innerHTML=ours.name;
+                qs = "#Bear .prix span";
+                document.querySelector(qs).innerHTML=ours.price;
+                qs="#Bear p";
+                document.querySelector(qs).innerHTML=ours.description;
+                qs="#Bear img";
+                let img=document.querySelector(qs);
+                img.setAttribute("src", ours.imageUrl);
+                for(let u=0;u<ours.colors.length;u++){
+                  qs="#Bear select";
+                  let option=document.createElement("option");
+                  option.innerHTML=ours.colors[u];
+                  document.querySelector(qs).appendChild(option);
+                  }
+                });
+              });
+    </script>
 </body>
 </html>

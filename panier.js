@@ -118,7 +118,8 @@ function envoi_commande(event){
   commande.products=products;
   commande.contact=contact;
   var request=new XMLHttpRequest();//initialise un objet XMLHttpRequest
-  request.onreadystatechange=function(){ //gestionnaire d'évènement (EventHandler) invoqué à chaque fois que l'attribut readyState change
+  //gestionnaire d'évènement (EventHandler) invoqué à chaque fois que l'attribut readyState change
+  request.onreadystatechange=function(){
   if(this.readyState==XMLHttpRequest.DONE && this.status==201){
     var response=JSON.parse(this.responseText);
     let id_commande=response.orderId

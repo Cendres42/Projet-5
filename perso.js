@@ -1,56 +1,60 @@
-//Déclaration des variables:
-let bouton_ajout_panier=document.getElementById("ajout-panier");
-let panier=[];
-let liste_produits="";
-let nouveau_produit="";
-let nouvelle_qte="";
+// création objet panier
+// création fonction anonyme
+// élements renvoyés dans panier
+let Panier = (function() {
 
+    let products=[];
 
-//Boutons d'action:
-bouton_ajout_panier.addEventListener("click",ajout_panier);
+      let add = function(id,name,qty) {
+        let newProduct = {};
+        newProduct.id   = id;
+        newProduct.name = name;
+        newProduct.qty  = qty;
 
-//fonction d'affichage de l'ours sur lequel l'utilisaeur a cliqué
-  var request=new XMLHttpRequest();
-  request.onreadystatechange=function (){
-    if(this.readyState==XMLHttpRequest.DONE && this.status==200){ //vérification serveur prêt à répondre
-      var response=JSON.parse(this.responseText);
-      let qs = "#Bear h2 span.name"; //idem fonction affichage produits
-      document.querySelector(qs).innerHTML=response.name; //récupération des éléments le concernant
-      qs = "#Bear .prix span";
-      document.querySelector(qs).innerHTML=response.price;
-      qs="#Bear p";
-      document.querySelector(qs).innerHTML=response.description;
-      qs="#Bear img";
-      let img=document.querySelector(qs);
-      img.setAttribute("src",response.imageUrl);
-      for(let u=0;u<response.colors.length;u++){
-        qs="#Bear select";
-        let option=document.createElement("option");
-        option.innerHTML=response.colors[u];
-        document.querySelector(qs).appendChild(option);
+        products.push(newProduct);
+    };
+
+      let count = function() {
+      return(products.length);
+    };
+
+    let get = function(position) {
+      return(products[position]);
+    };
+
+    let load = function(){
+      let ours= JSON.parse(sessionStorage.getItem("liste_produits_panier"));
+      if (ours==null){
+        ours=[];
       }
-    }
-  }
-  let adresse=window.location.search; //récupération dans la barre d'adresse de l'id-produit
-  let identifiant=(adresse.replace('?product_id=', ''));  //récupération dans la barre d'adresse de l'id-produit
-  request.open("GET", "http://localhost:3000/api/teddies/"+identifiant); //ouverture de la requête GET pour l'id récupéré
-  request.send();//envoi de la requête
-  sessionStorage.setItem("identifiant", identifiant);
+      ours.forEach(element=>function(element){
+        products.push(element)
+      });
+    };
+    load();
 
-
-//function ajout_panier(){
+  return {
+    add:   add,
+    count: count,
+    get:   get
+  };
+})();
 
 function ajout_panier(){
   panier= JSON.parse(sessionStorage.getItem("liste_produits_panier"));
+  //affectation valeur à panier pour éviter valeur "null"
   if(panier==null){
   panier=[];
   }
+  // création d'un objet new_product avec 4 propriétés (variables membres)
   let new_product={};
   new_product.id=identifiant;
   new_product.name=document.querySelector("#Bear h2 span.name").innerHTML;
   new_product.qte=document.getElementById("qt").value;
   new_product.price=document.querySelector("#Bear .prix span").innerHTML;
   let found=0;
+  /* vérifier si le produit est déjà dans le panier
+  le cas échéant modifier la quantité*/
   for (let i=0; i<panier.length;i++){
     if(new_product.id==panier[i].id){
       panier[i].qte=parseInt(panier[i].qte, 10);
@@ -61,47 +65,38 @@ function ajout_panier(){
       found=1;
     }
   }
+  // dans le cas contraire ajouter le produit et sa quantité au panier
     if(found==0){
-    panier.push(new_product);
-    liste_produits=document.getElementById("panier");
-    nouvelle_colonne = document.createElement('tr');
-    nouvelle_colonne.setAttribute("id","panier-"+identifiant);
-    liste_produits.appendChild(nouvelle_colonne);
-    nouveau_produit = document.createElement('td');
-    nouveau_produit.setAttribute("class","pdt");
-    nouvelle_colonne.appendChild(nouveau_produit);
-    nouveau_produit.innerHTML=new_product.name;
-    nouvelle_qte= document.createElement('td');
-    nouvelle_qte.setAttribute("class","qte");
-    nouvelle_colonne.appendChild(nouvelle_qte);
-    nouvelle_qte.innerHTML= new_product.qte;
+      panier.push(new_product);
+      liste_produits=document.getElementById("panier");
+      // création d'une nouvelle ligne dans la table de produits
+      nouvelle_colonne = document.createElement('tr');
+      nouvelle_colonne.setAttribute("id","panier-"+identifiant);
+      liste_produits.appendChild(nouvelle_colonne);
+      // ajout d'une cellule avec le nom du produit
+      nouveau_produit = document.createElement('td');
+      nouveau_produit.setAttribute("class","pdt");
+      nouvelle_colonne.appendChild(nouveau_produit);
+      nouveau_produit.innerHTML=new_product.name;
+      // ajout d'une cellule avec la quantité
+      nouvelle_qte= document.createElement('td');
+      nouvelle_qte.setAttribute("class","qte");
+      nouvelle_colonne.appendChild(nouvelle_qte);
+      nouvelle_qte.innerHTML= new_product.qte;
     }
 sessionStorage.setItem("liste_produits_panier", JSON.stringify(panier));
 }
 
 
-//fonction récupération panier
-function recup_panier(){
-  panier= JSON.parse(sessionStorage.getItem("liste_produits_panier"));
-  identifiant=(sessionStorage.getItem("identifiant"));
-  if(panier==null){
-  panier=[];
-  }
-  for (let i=0; i<panier.length; i++){
-    let new_product=panier[i];
-    liste_produits=document.getElementById("panier");
-    nouvelle_colonne = document.createElement('tr');
-    nouvelle_colonne.setAttribute("id","panier-"+identifiant);
-    liste_produits.appendChild(nouvelle_colonne);
-    nouveau_produit = document.createElement('td');
-    nouveau_produit.setAttribute("class","pdt");
-    nouvelle_colonne.appendChild(nouveau_produit);
-    nouveau_produit.innerHTML=new_product.name;
-    nouvelle_qte= document.createElement('td');
-    nouvelle_qte.setAttribute("class","qte");
-    nouvelle_colonne.appendChild(nouvelle_qte);
-    nouvelle_qte.innerHTML= new_product.qte;
-  }
-}
 
-window.addEventListener("load", recup_panier());
+
+
+ //Déclaration des variables globales:
+let bouton_ajout_panier=document.getElementById("ajout-panier");
+let panier=[];
+let liste_produits="";
+let nouveau_produit="";
+let nouvelle_qte="";
+
+//Boutons d'action:
+bouton_ajout_panier.addEventListener("click",ajout_panier);
