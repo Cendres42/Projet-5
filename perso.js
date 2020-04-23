@@ -1,10 +1,14 @@
-// création objet panier
-// création fonction anonyme
-// élements renvoyés dans panier
+/**
+  * @brief objet permettant de manipuler le panier
+  * @return l'objet Panier
+  */
 let Panier = (function() {
-
     let products=[];
 
+    /**
+      * @brief méthode permettant d'ajouter des produits au tableau products
+      * @param {string} id , {string} name, {string} qty
+      */
       let add = function(id,name,qty) {
         let newProduct = {};
         newProduct.id   = id;
@@ -14,6 +18,10 @@ let Panier = (function() {
         products.push(newProduct);
     };
 
+    /**
+      * @brief méthode comptant le nbe de produits différents dans le panier
+      * @return la longueur du tableau products
+      */
       let count = function() {
       return(products.length);
     };
@@ -39,6 +47,12 @@ let Panier = (function() {
     get:   get
   };
 })();
+
+
+
+
+
+
 
 function ajout_panier(){
   panier= JSON.parse(sessionStorage.getItem("liste_produits_panier"));

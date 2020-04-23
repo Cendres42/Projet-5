@@ -44,61 +44,60 @@
   </footer>
 
   <script type="text/javascript">
+  //chargement de la liste des produits après chargement de la page
     window.addEventListener("load", function(){
       let promise=Produits.load();
       promise.then(function(nbeOurs){
+        //insert dans la page chaque produit renvoyé par le catalogue
         for (let i=0; i<nbeOurs;i++){
           let ours =Produits.get(i);
-          //création de la div class="bear" enfant de id="bears"
+
+          //création d'un élément conteneur pour l'un des produits
           let bears = document.getElementById("bears");
           let new_bear=document.createElement('div');
           new_bear.setAttribute("class","bear");
           bears.appendChild(new_bear);
-          //création du titre h2 avec nom de l'ours
 
+          //création d'un élément titre pour le nom de l'ours
           let new_titre=document.createElement('h2');
           new_titre.innerHTML="Ours en peluche "+ours.name;
           new_bear.appendChild(new_titre);
 
-          //création div class="produit"
+          //création d'un élément structurant contenant les éléments du produit
           let new_produit=document.createElement('div');
           new_produit.setAttribute("class","produit");
           new_bear.appendChild(new_produit);
-
-          //création des deux div enfants de class="produit"
+          //création d'un élément structurant contenant image
           let new_cadre_img=document.createElement('div');
           new_cadre_img.setAttribute("class", "cadre-img");
           new_produit.appendChild(new_cadre_img);
+          //création d'un élément structurant contenant prix et description
           let new_cadre_pdt=document.createElement('div');
           new_cadre_pdt.setAttribute("class", "cadre-pdt");
           new_produit.appendChild(new_cadre_pdt);
 
-          //ajout de l'image et du lien
+          //création d'un élément avec l'image du produit et lien vers fiche
           let new_img=document.createElement('a');
           new_img.setAttribute("href","perso.html?product_id="+ours._id);
           new_cadre_img.appendChild(new_img);
-
           let new_source=document.createElement("img");
           new_source.setAttribute("src",ours.imageUrl);
           new_img.appendChild(new_source);
 
-          //ajout de la description
+          //création d'un élément contenant la description du produit
           let new_description=document.createElement('p')
           new_cadre_pdt.appendChild(new_description);
           new_description.innerHTML=ours.description;
-          //ajout du prix
 
+          //création d'un élément contenant le prix du produit
           let new_prix=document.createElement('div');
           new_prix.setAttribute("class", "prix");
           new_cadre_pdt.appendChild(new_prix);
-          new_prix.innerHTML="Prix : ";
-          let new_span_prix=document.createElement('span');
-          new_prix.appendChild(new_span_prix);
-          new_span_prix.innerHTML=ours.price+"&nbsp; &euro;";
+          new_prix.innerHTML="Prix : "+ours.price+"&nbsp;&euro;";
           }
         });
       });
   </script>
-  
+
 </body>
 </html>
