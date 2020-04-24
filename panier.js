@@ -1,3 +1,8 @@
+
+
+
+
+
 let bouton_ajout_panier=document.getElementById("ajout-panier");
 let panier=[];
 let liste_produits="";
@@ -76,37 +81,14 @@ function panier_commande(){
     sessionStorage.setItem("ttc", ttc);
 }
 
-//fonction création panier
-function recup_panier(){
-  panier= JSON.parse(sessionStorage.getItem("liste_produits_panier"));
-  identifiant=(sessionStorage.getItem("identifiant"));
-  if(panier==null){
-  panier=[];
-  }
-  for (let i=0; i<panier.length; i++){
-    let new_product=panier[i];
-    liste_produits=document.getElementById("panier");
-    nouvelle_colonne = document.createElement('tr');
-    nouvelle_colonne.setAttribute("id","panier-"+identifiant);
-    liste_produits.appendChild(nouvelle_colonne);
-    nouveau_produit = document.createElement('td');
-    nouveau_produit.setAttribute("class","pdt");
-    nouvelle_colonne.appendChild(nouveau_produit);
-    nouveau_produit.innerHTML=new_product.name;
-    nouvelle_qte= document.createElement('td');
-    nouvelle_qte.setAttribute("class","qte");
-    nouvelle_colonne.appendChild(nouvelle_qte);
-    nouvelle_qte.innerHTML= new_product.qte;
-  }
-}
 
 
 function envoi_commande(event){
   event.preventDefault();
   let commande ={};
   let contact={};// création nouvel objet contact
-  contact.name=document.getElementById("name").value;
-  contact.lastname=document.getElementById("lastname").value;
+  contact.nom=document.getElementById("nom").value;
+  contact.prenom=document.getElementById("prenom").value;
   contact.adresse=document.getElementById("adresse").value;
   contact.ville=document.getElementById("ville").value;
   contact.email=document.getElementById("email").value;
@@ -135,5 +117,4 @@ function envoi_commande(event){
 
 window.addEventListener("load", function(){
    panier_commande()
-   recup_panier()
 });

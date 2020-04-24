@@ -64,30 +64,91 @@
       </section>
       <div id="formulaire">
         <p> Pour pouvoir valider votre commande, veuillez remplir toutes les rubriques de ce formulaire, merci! </p>
-        <form   id="form_1"> <!--method="post" action="http://localhost:3000/api/teddies"-->
+        <form  novalidate name="client" id="form_1"> <!--method="post" action="http://localhost:3000/api/teddies"-->
           <div class="form-group">
-            <label class="label" for="name">	Nom	</label>
-            <input type="text" name="name" id="name" title="nom" class="form-control" required />
+            <label class="label" for="nom">	Nom	</label>
+            <input type="text" name="nom" id="nom" title="nom" class="form-control" pattern="[A-Za-z]{3,20}" required/>
+            <span id="missNom"></span>
           </div>
           <div class="form-group">
-              <label class="label" for="lastname">	Prénom	</label>
-              <input type="text" name="lastname" id="lastname" title="prénom" class="form-control" required />
+              <label class="label" for="prenom">	Prénom	</label>
+              <input type="text" name="prenom" id="prenom" title="prénom" class="form-control" pattern="[A-Za-z]{3,20}" required />
+              <span id="missPrenom"></span>
           </div>
           <div class="form-group">
               <label class="label" for="adresse">	Adresse	</label>
-              <input type="text" name= "adresse" id="adresse" title=" adresse" class="form-control" required  />
+              <input type="text" name= "adresse" id="adresse" title=" adresse" class="form-control" minlength="8" required  />
+              <span id="missAdresse"></span>
           </div>
           <div class="form-group">
               <label class="label" for="ville">	Ville	</label>
-              <input type="text" name= "ville" id="ville" title=" ville" class="form-control" required  />
+              <input type="text" name= "ville" id="ville" title=" ville" class="form-control" minlength="3" required  />
+              <span id="missVille"></span>
           </div>
           <div class="form-group">
               <label class="label" for="email">	Adresse email	</label>
               <input type="email" name="email" id="email" title= "adresse mail" class="form-control" required />
+              <span id="missEmail"></span>
           </div>
          <button id="envoi" class="button" type="submit">Passer la commande </button>
        </form>
      </div>
   </div>
+
+  <script type="text/javascript">
+    // soumission du formulaire par action sur bouton de type submit
+    let formValid=document.getElementById("form_1");
+    formValid.addEventListener("submit",verifier);
+
+    function verifier(event){
+      event.preventDefault();
+      let nom = document.getElementById('nom');
+      let missNom = document.getElementById('missNom');
+      if(nom.validity.valueMissing){
+        missNom.innerHTML="Veuillez entrez un nom";
+        missNom.style.color="red";
+      }
+      else{
+        missNom.innerHTML="";
+      }
+      let prenom = document.getElementById('prenom');
+      let missPrenom = document.getElementById('missPrenom');
+      if(prenom.validity.valueMissing){
+        missPrenom.textContent="Veuillez entrez un prénom";
+        missPrenom.style.color="red";
+      }
+      else{
+        missPrenom.innerHTML="";
+      }
+      let adresse = document.getElementById('adresse');
+      let missAdresse = document.getElementById('missAdresse');
+      if(adresse.validity.valueMissing){
+        missAdresse.textContent="Veuillez entrez une adresse postale valide";
+        missAdresse.style.color="red";
+      }
+      else{
+        missAdresse.innerHTML="";
+      }
+      let ville = document.getElementById('ville');
+      let missVille = document.getElementById('missVille');
+      if(ville.validity.valueMissing){
+        missVille.textContent="Veuillez entrez un nom de ville";
+        missVille.style.color="red";
+      }
+      else{
+        missVille.innerHTML="";
+      }
+      let email = document.getElementById('email');
+      let missEmail = document.getElementById('missEmail');
+      if(email.validity.valueMissing){
+        missEmail.textContent="Veuillez entrez un email valide";
+        missEmail.style.color="red";
+      }
+      else{
+        missEmail.innerHTML="";
+      }
+  }
+  </script>
+
 </body>
 </html>
