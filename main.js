@@ -11,15 +11,13 @@ let Panier = (function() {
       * @param name nom du produit
       * @param qty nombre d'unités ajoutées
       */
-      let add = function(id,name,qty,price) {
+      let add = function(_id,name,qty,price) {
         let newProduct  = {};
-        newProduct.id   = id;
+        newProduct.id   = _id;
         newProduct.name = name;
         newProduct.qty  = qty;
         newProduct.price = price;
-
         products.push(newProduct);
-        console.log(products);
     };
 
     /**
@@ -70,7 +68,6 @@ let Panier = (function() {
       return (null);
     };
 
-
   /**
     * @brief permet de consulter un des produits du panier
     * @param  position position de l'élément recherché dans le panier
@@ -97,6 +94,15 @@ let Panier = (function() {
     load();
 
     /**
+      * @brief méthode qui va effacer panier puis le reconstruire
+      */
+    let refresh = function(){
+      let plop =document.getElementById('panier');
+      plop.innerHTML="";
+      display();
+    };
+
+    /**
       * @brief méthode pour sauvegarder le panier dans session
       */
     let save = function(){
@@ -110,15 +116,6 @@ let Panier = (function() {
       */
     let setQty=function(position,newQty){
       products[position].qty=newQty;
-    };
-
-      /**
-        * @brief méthode qui va effacer panier puis le reconstruire
-        */
-    let refresh = function(){
-      let plop =document.getElementById('panier');
-      plop.innerHTML="";
-      display();
     };
 
 //fonctions qui seront appelées de l'extérieur de l'objet panier
@@ -157,7 +154,6 @@ function ajout_panier(id){
   Panier.save();
 }
 
-
 /**
   * @brief objet permettant de manipuler le catalogue des produits
   * @return l'objet Produits
@@ -169,73 +165,72 @@ function ajout_panier(id){
     * @brief méthode permettant de compter le nombre de produits
     * @return la longueur du tableau de produits
     */
-
   let count = function() {
   return(produits.length);
   };
 
-/**
-  * @brief méthode permettant de charger les produits du catalogue
-  * @return une promesse qui résolue renverra le nombre de pdts récupérés
-  */
-  let load = function(){
-    let loadPromise=new Promise(function(resolve, reject) {
-        let request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            // vérification serveur a répondu et requête est un succès
-            if(this.readyState==XMLHttpRequest.DONE && this.status==200){
-              let tousLesOurs=(JSON.parse(this.responseText));
-              // création tableau ours si inexistant
-              if (tousLesOurs==null){
-                tousLesOurs=[];
+  /**
+    * @brief permet de consulter un des produits chargé depuis le serveur
+    * @param  index position de l'élément recherché
+    * @return l'un des produits du catalogue
+    */
+    let get =function(index){
+        return(produits[index]);
+    }
+
+    /**
+      * @brief méthode permettant de récupérer une fiche produit
+      * @param id identifiant du produit
+      * @return une promesse qui résolue renverra l'objet ours contenant la fiche
+      */
+    let getById =function(id){
+        let getByIdPromise=new Promise(function(resolve, reject) {
+            let request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+              // vérification serveur a répondu et requête est un succès
+                if(this.readyState==XMLHttpRequest.DONE && this.status==200){
+                  let ours=(JSON.parse(this.responseText));
+                  resolve(ours);
+                }
               }
-              // insert dans tableau produits chaque produit renvoyé par serveur
-              for (let i=0; i<tousLesOurs.length;i++){
-                let ours=tousLesOurs[i];
-                produits.push(ours);
+              //envoi de la requête au serveur en précisant id du produit
+              request.open("GET", "http://localhost:3000/api/teddies/"+id);
+              request.send();
+            });
+            return(getByIdPromise);
+          }
+
+  /**
+    * @brief méthode permettant de charger les produits du catalogue
+    * @return une promesse qui résolue renverra le nombre de pdts récupérés
+    */
+    let load = function(){
+      let loadPromise=new Promise(function(resolve, reject) {
+          let request = new XMLHttpRequest();
+          request.onreadystatechange = function() {
+              // vérification serveur a répondu et requête est un succès
+              if(this.readyState==XMLHttpRequest.DONE && this.status==200){
+                let tousLesOurs=(JSON.parse(this.responseText));
+                // création tableau ours si inexistant
+                if (tousLesOurs==null){
+                  tousLesOurs=[];
+                }
+                // insert dans tableau produits chaque produit renvoyé par serveur
+                for (let i=0; i<tousLesOurs.length;i++){
+                  let ours=tousLesOurs[i];
+                  produits.push(ours);
+                }
+                resolve(produits.length);
               }
-              resolve(produits.length);
             }
-            }
-            // envoi de la requête au serveur
+              // envoi de la requête au serveur
             request.open("GET", "http://localhost:3000/api/teddies/");
             request.send();
           });
-          return(loadPromise);
-        }
+        return(loadPromise);
+      }
 
-/**
-  * @brief permet de consulter un des produits chargé depuis le serveur
-  * @param  index position de l'élément recherché
-  * @return l'un des produits du catalogue
-  */
-  let get =function(index){
-      return(produits[index]);
-  }
-
-  /**
-    * @brief méthode permettant de récupérer une fiche produit
-    * @param id identifiant du produit
-    * @return une promesse qui résolue renverra l'objet ours contenant la fiche
-    */
-  let getById =function(id){
-      let getByIdPromise=new Promise(function(resolve, reject) {
-          let request = new XMLHttpRequest();
-          request.onreadystatechange = function() {
-            // vérification serveur a répondu et requête est un succès
-              if(this.readyState==XMLHttpRequest.DONE && this.status==200){
-                let ours=(JSON.parse(this.responseText));
-                resolve(ours);
-              }
-            }
-            //envoi de la requête au serveur en précisant id du produit
-            request.open("GET", "http://localhost:3000/api/teddies/"+id);
-            request.send();
-          });
-          return(getByIdPromise);
-        }
-
-        return {
+      return {
         count: count,
         load:   load,
         get: get,
@@ -245,6 +240,7 @@ function ajout_panier(id){
 
     // fonction qui construit le panier et calcul le montant de la commande
     function panier_commande(){
+      //déclaration des variables
       let totalHT=0;
       let letotalHT="";
       let tva=0;
@@ -255,6 +251,7 @@ function ajout_panier(id){
       let nouveau_ttc="";
 
       let new_product={};
+      //récupération du contenu du panier pour préparer le tableau commande
       for (let i=0; i<Panier.count(); i++){
         let new_product=Panier.get(i);
         let panier_commande=document.getElementById("panier_commande");
@@ -281,6 +278,7 @@ function ajout_panier(id){
         sous_total.innerHTML=sous_total_value+ "&nbsp;&euro;";
         totalHT=totalHT+sous_total_value;
       }
+      //calcul du montant de la commande et sauvegarde des données
         tva=totalHT*0.2;
         ttc=totalHT+tva;
         letotalHT=document.getElementById("totalHT");
@@ -301,8 +299,7 @@ function ajout_panier(id){
         localStorage.setItem("ttc", ttc);
     }
 
-
-    // fonction qui envoi la commande si forumlaire complet
+    // fonction qui envoi la commande si formulaire complet et valide
     function envoi_commande(event){
       let nom="";
       let commande ={};
@@ -316,13 +313,14 @@ function ajout_panier(id){
       let products=[];
       for (let i=0; i<Panier.count(); i++){
         let product= Panier.get(i);
-        // Convert id name to comply api spec
+        // Convertion nom d'id name pour correspondre aux spec.
         product._id = product.id;
         products.push(product);
       }
       commande.products=products;
       commande.contact=contact;
-      var request=new XMLHttpRequest();//initialise un objet XMLHttpRequest
+      //initialisation objet XMLHttpRequest
+      var request=new XMLHttpRequest();
       //gestionnaire d'évènement invoqué quand l'attribut readyState change
       request.onreadystatechange=function(){
         if(this.readyState==XMLHttpRequest.DONE && this.status==201){

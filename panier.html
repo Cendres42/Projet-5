@@ -26,7 +26,7 @@
               <li>Meubles en chêne</li>
             </ul>
           </li>
-          <li id="commande" class="hautdepage__btn dropdown"><a href="panier.html #panier">PANIER &ensp;</a>
+          <li id="commande" class="hautdepage__btn dropdown"><a href="panier.html#panier">PANIER &ensp;</a>
             <div id="panier_style" class="tourni">
               <table id="panier">
               </table>
@@ -104,7 +104,7 @@
     // soumission du formulaire par action sur bouton de type submit
     let formValid=document.getElementById("form_1");
     formValid.addEventListener("submit",verifier);
-
+    //fonction de vérification du formulaire avant validation (en + du HTML)
     function verifier(event){
       event.preventDefault();
       let valid=true;

@@ -27,7 +27,7 @@
            <li>Meubles en chêne</li>
          </ul>
        </li>
-       <li id="commande" class="hautdepage__btn dropdown"><a href="panier.html #panier">PANIER &ensp;</a>
+       <li id="commande" class="hautdepage__btn dropdown"><a href="panier.html#panier">PANIER &ensp;</a>
         <div id="panier_style" class="tourni">
           <table id="panier">
           </table>
@@ -91,7 +91,7 @@
                   document.querySelector(qs).appendChild(option);
                   }
                 });
-
+                //au clic sur bouton "Ajouter au panier", appel fonction ajout_p
                 let bouton_ajout_panier=document.getElementById("ajout-panier");
                 bouton_ajout_panier.addEventListener("click",function(){
                   ajout_panier(id)
