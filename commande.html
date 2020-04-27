@@ -28,9 +28,9 @@
   </div>
   <script type="text/javascript">
       function commande_valide(){
-          objet_commande=sessionStorage.getItem("id_commande");
+          objet_commande=localStorage.getItem("id_commande");
           document.querySelector("#commande span").innerHTML=objet_commande; //récupération des éléments le concernant
-          document.querySelector("#montant span").innerHTML=sessionStorage.getItem("ttc");
+          document.querySelector("#montant span").innerHTML=localStorage.getItem("ttc");
       }
 
       window.addEventListener("load", function(){

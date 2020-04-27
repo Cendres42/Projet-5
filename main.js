@@ -84,7 +84,7 @@ let Panier = (function() {
     * @brief méthode permettant de récupérer les produits du panier
     */
     let load = function(){
-      let panier_plein= JSON.parse(sessionStorage.getItem("liste_produits_panier"));
+      let panier_plein= JSON.parse(localStorage.getItem("liste_produits_panier"));
       if (panier_plein==null){
         panier_plein=[];
       }
@@ -100,7 +100,7 @@ let Panier = (function() {
       * @brief méthode pour sauvegarder le panier dans session
       */
     let save = function(){
-       sessionStorage.setItem("liste_produits_panier", JSON.stringify(products));
+       localStorage.setItem("liste_produits_panier", JSON.stringify(products));
      };
 
     /**
@@ -298,7 +298,7 @@ function ajout_panier(id){
         nouveau_ttc.setAttribute("class","ttc");
         lettc.appendChild(nouveau_ttc);
         nouveau_ttc.innerHTML=ttc+ "&nbsp;&euro;";
-        sessionStorage.setItem("ttc", ttc);
+        localStorage.setItem("ttc", ttc);
     }
 
 
@@ -329,7 +329,7 @@ function ajout_panier(id){
           var response=JSON.parse(this.responseText);
           //récupération id de commande
           let id_commande=response.orderId
-          sessionStorage.setItem("id_commande", id_commande);
+          localStorage.setItem("id_commande", id_commande);
           document.location.href="commande.html";
           }
       }
