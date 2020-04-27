@@ -53,7 +53,7 @@
         </form>
       </div>
     </div>
-    <label for="q">Quantité: </label>
+    <label for="qt">Quantité: </label>
       <select id="qt" name="q" size="1">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -61,11 +61,11 @@
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-    <button id="ajout-panier" type="button" class="add-to-cart"> <a href="#commande">Ajouter au panier</a></button>
+    <a href="#commande"><button id="ajout-panier" type="button" class="add-to-cart"> Ajouter au panier</button></a>
   </div>
 
 
-    <script type="text/javascript">
+    <script >
         //chargement de la fiche du produit après chargement de la page
         window.addEventListener("load", function(){
             // récupération dans la barre d'adresse de l'id-produit
