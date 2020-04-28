@@ -10,22 +10,35 @@ let Panier = (function() {
       * @param  id identitfiant du produit
       * @param name nom du produit
       * @param qty nombre d'unités ajoutées
+      * @param price prix unitaire du produit ajouté
       */
       let add = function(_id,name,qty,price) {
+        let args= arguments.length;
+        if (args!==4){
+          console.log("appel de add avec un nbe invalide d'arguments")
+          return;
+        }
         let newProduct  = {};
         newProduct.id   = _id;
         newProduct.name = name;
         newProduct.qty  = qty;
         newProduct.price = price;
         products.push(newProduct);
-    };
+      };
+
+    /**
+     * @brief méthode vidant le panier
+     */
+     let clear=function(){
+       products=[];
+     };
 
     /**
      * @brief méthode comptant le nbe de produits différents dans le panier
      * @return nombre de produits actuellement dans le panier
      */
-     let count = function() {
-       return(products.length);
+    let count = function() {
+        return(products.length);
     };
 
 
@@ -74,6 +87,9 @@ let Panier = (function() {
     * @return l'un des produits du panier
     */
     let get = function(position) {
+      if(position>=products.length){
+        return(null);
+      }
       return(products[position]);
     };
 
@@ -124,9 +140,11 @@ let Panier = (function() {
     count: count,
     get:   get,
     save: save,
+    load:load,
     refresh: refresh,
     setQty:setQty,
-    findId:findId
+    findId:findId,
+    clear: clear,
   };
 })();
 
