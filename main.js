@@ -145,6 +145,7 @@ let Panier = (function() {
     setQty:setQty,
     findId:findId,
     clear: clear,
+    display:display
   };
 })();
 

@@ -129,10 +129,10 @@ function testCount3(){
     }
 };
 
+//Test de la méthode findId qui récupère la position du produit dans le panier
 function testFindId1(){
     // Efface contenu du panier
     Panier.clear();
-    //ajout objet complet
     let testFindId1=document.getElementById("testFindId1");
     Panier.add("idone","Calinours",2,1000);
     let position=Panier.findId("idone");
@@ -184,6 +184,7 @@ function testFindId3(){
     }
 };
 
+//Test de la méthode get qui récupère un produit à partir de sa position
 function testGet1(){
     // Efface contenu du panier
     Panier.clear();
@@ -239,6 +240,7 @@ function testGet3(){
     }
 };
 
+//Test de la méthode setQty qui modifie la quantité dans le panier
 function testsetQty1(){
   // Efface contenu du panier
   Panier.clear();
@@ -267,17 +269,165 @@ function testsetQty2(){
   Panier.add("idthree","Nours",1, 1020);
   Panier.setQty(1,5);
   if ((Panier.get(0).qty !== 1) || (Panier.get(1).qty !== 5) || (Panier.get(2).qty !== 1)){
-      testsetQty2.innerHTML='Simple setQty failed!';
+      testsetQty2.innerHTML='Middle setQty failed!';
       testPasOk++;
     }
     else{
-      testsetQty2.innerHTML='Simple setQty success!!!';
+      testsetQty2.innerHTML='Middle setQty success!!!';
       testOk++;
     }
 };
 
+function testLoad1() {
+  // Efface contenu du panier
+  Panier.clear();
+  //test ajout objet complet
+  let testLoad1=document.getElementById("testLoad1");
+  Panier.add("idone","Calinours",2,1000);
+  Panier.save();
+  Panier.clear();
+  Panier.load();
+  Panier.get(0)
+  if ((Panier.get(0).id!== "idone")|| (Panier.get(0).name!== "Calinours") || (Panier.get(0).qty !== 2) || (Panier.get(0).price!== 1000)){
+    testLoad1.innerHTML='Simple load failed!';
+    testPasOk++;
+  }
+  else{
+    testLoad1.innerHTML='Simple load success!!!';
+    testOk++;
+  }
+};
 
 
+function testLoad2() {
+  Panier.clear();
+  let testLoad2=document.getElementById("testLoad2");
+  let testData = [{id:"idone", name:"Bisounours", qty:2, price:800},
+                  {id:"idtwo", name:"Calinours", qty:3, price:1000},
+                  {id:"idthree", name:"Nours", qty:1, price:1100}
+                ];
+  for (let i = 0; i < testData.length; i++){
+    Panier.add(testData[i].id, testData[i].name, testData[i].qty, testData[i].price);
+  }
+  Panier.save();
+  Panier.clear();
+  Panier.load();
+  for (let i = 0; i < testData.length; i++){
+    let load = Panier.get(i);
+    if ((load.id !== testData[i].id) || (load.name !== testData[i].name) || (load.qty !== testData[i].qty) || (load.price !== testData[i].price)){
+    testLoad2.innerHTML='Middle load failed!';
+    testPasOk++;
+    }
+    else{
+      testLoad2.innerHTML='Middle load success!!!';
+      testOk++;
+    }
+  }
+};
+
+function testLoad3() {
+  // Efface contenu du panier
+  localStorage.removeItem("liste_produits_panier");
+  //test ajout objet complet
+  let testLoad3=document.getElementById("testLoad3");
+  Panier.load();
+  if (Panier.count()!==0){
+    testLoad3.innerHTML='Empty load failed!';
+    testPasOk++;
+  }
+  else{
+    testLoad3.innerHTML='Empty load success!!!';
+    testOk++;
+  }
+};
+
+function testDisplay1(){
+  let testDisplay1=document.getElementById("testDisplay1");
+  let panier=document.getElementById("panier");
+  panier.innerHTML="";
+  Panier.clear();
+  Panier.add("idone","Calinours",2,1000);
+  Panier.save();
+  Panier.display();
+  let valide=true;
+  //for (let i=0; i<Panier.count(); i++){
+      let ligne=document.querySelectorAll('#panier tr');
+      let element=ligne[0].querySelectorAll('td');
+        if(Panier.count()!==ligne.length){
+          valide=false;
+        }
+        if(ligne[0].getAttribute("id")!==("panier-"+ Panier.get(0).id)){
+          valide=false;
+        }
+        if(element.length!==2){
+          valide=false;
+        }
+        if(element[0].getAttribute("class")!==("pdt")){
+          valide=false;
+        }
+        if(element[0].innerHTML!==Panier.get(0).name){
+          valide=false;
+        }
+        if(element[1].getAttribute("class")!==("qte")){
+          valide=false;
+        }
+        if(element[1].innerHTML!=Panier.get(0).qty){
+          valide=false;
+        }
+        if (valide==false){
+          testDisplay1.innerHTML="Simple Display failed";
+        }
+        else{
+          testDisplay1.innerHTML="Simple Display success";
+        }
+};
+
+function testDisplay2(){
+  let testDisplay2=document.getElementById("testDisplay2");
+  let panier=document.getElementById("panier");
+  panier.innerHTML="";
+  Panier.clear();
+  Panier.add("idone","Calinours",2,1000);
+  Panier.add("idtwo","Calinours",1, 1000);
+  Panier.add("idthree","Nours",1, 1020);
+  Panier.save();
+  Panier.display();
+  let valide=true;
+  let ligne=document.querySelectorAll('#panier tr');
+  if(Panier.count()!==ligne.length){
+    valide=false;
+  }
+  console.log(Panier.count());
+  for (let i=0; i<Panier.count(); i++){
+      let element=ligne[i].querySelectorAll('td');
+        if(ligne[i].getAttribute("id")!==("panier-"+ Panier.get(i).id)){
+        valide=false;
+        }
+        if(element.length!==2){
+          valide=false;
+        }
+        if(element[0].getAttribute("class")!==("pdt")){
+          valide=false;
+        }
+        if(element[0].innerHTML!==Panier.get(i).name){
+          valide=false;
+        }
+        if(element[1].getAttribute("class")!==("qte")){
+          valide=false;
+        }
+        if(element[1].innerHTML!=Panier.get(i).qty){
+          valide=false;
+        }
+      }
+        if (valide==false){
+          testDisplay2.innerHTML="Simple Display failed";
+        }
+        else{
+          testDisplay2.innerHTML="Simple Display success";
+        }
+};
+
+//fonction de comptage du nombre et du pourcentage de tests réussis et échoués
 function compteur(){
   let nbeTestsOk=document.getElementById("nbeTestsOk");
   nbeTestsOk.innerHTML=testOk;

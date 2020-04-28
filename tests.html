@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <div id="tests">
     <p> Résultat tests fonction "add":</p>
   <div id="testAdd1">
   </div>
@@ -49,7 +50,21 @@
   <div id="testsetQty2">
   </div>
 
+  <p> Résultat tests fonction "load":</p>
+  <div id="testLoad1">
+  </div>
+  <div id="testLoad2">
+  </div>
+  <div id="testLoad3">
+  </div>
 
+  <p> Résultat tests fonction "display":</p>
+  <div id="testDisplay1">
+  </div>
+  <div id="testDisplay2">
+  </div>
+  <div id="testDisplay3">
+  </div>
 
 
   <p> Nombre de tests réussis:</p>
@@ -65,6 +80,11 @@
   <p> Pourcentage de tests ratés:</p>
   <div id="percentTestsPasOk">
   </div>
+</div>
+
+  <table id="panier" class="todisapear">
+ </table>
+
 
   <script>
     window.addEventListener("load", function(){
@@ -83,6 +103,12 @@
       testGet3();
       testsetQty1();
       testsetQty2();
+      testLoad1();
+      testLoad2();
+      testLoad3();
+      testDisplay1();
+      testDisplay2();
+
       compteur();
     });
   </script>

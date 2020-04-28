@@ -1,3 +1,10 @@
+.todisapear{
+display:none;  
+}
+#tests p{
+    background-color:aquamarine;
+  }
+
 #cmd{
 background-color: #f3e9f1;
 border:1px solid black;
