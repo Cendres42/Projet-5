@@ -66,6 +66,37 @@
   <div id="testDisplay3">
   </div>
 
+  <p> Résultat tests fonction "refresh":</p>
+  <div id="testRefresh1">
+  </div>
+  <div id="testRefresh2">
+  </div>
+
+  <p> Résultat tests fonction "save":</p>
+  <div id="testSave">
+  </div>
+
+  <p> Résultat tests fonction "clear":</p>
+  <div id="testClear">
+  </div>
+
+  <p> Résultat tests fonction "ajout_panier":</p>
+  <div id="testAjoutPanier1">
+  </div>
+  <div id="testAjoutPanier2">
+  </div>
+  <div id="testAjoutPanier3">
+  </div>
+
+  <p> Résultat tests fonction "panier_commande":</p>
+  <div id="testPanierCommande1">
+  </div>
+  <div id="testPanierCommande2">
+  </div>
+  <div id="testPanierCommande3">
+  </div>
+
+
 
   <p> Nombre de tests réussis:</p>
   <div id="nbeTestsOk">
@@ -82,8 +113,52 @@
   </div>
 </div>
 
+
+<!--table panier pour test fonction ajout_panier-->
   <table id="panier" class="todisapear">
  </table>
+
+<!--html pour test fonction display-->
+ <div id="Bear" class="todisapear">
+     <h2>Ours en peluche <span class="name">Calinours</span></h2>
+     <div class="produit">
+       <div class="cadre-pdt">
+       </div>
+       <select id="qt" name="q" size="1">
+         <option value="2">2</option>
+       </select>
+       <div class="prix">Prix: <span>1000</span> €
+       </div>
+     </div>
+  </div>
+
+  <!--html pour test fonction panier_commande-->
+    <section id="table_panier">
+        <h2> Votre panier:</h2>
+         <table id="panierPourCommande">
+          <thead>
+            <tr>
+              <th id="pdt_commande">Produits</th>
+              <th id="prix">Prix unitaire</th>
+              <th id="qte_commande">Quantité</th>
+              <th id="total_par_produit">Total</th>
+            </tr>
+          </thead>
+          <tbody id="panier_commande">
+          </tbody>
+          <tfoot>
+            <tr id="totalHT">
+              <td colspan="3">Total HT</td>
+            </tr>
+            <tr id="tva">
+              <td colspan="3">TVA</td>
+            </tr>
+            <tr id="ttc">
+              <td colspan="3"> Net à payer</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
 
 
   <script>
@@ -108,6 +183,16 @@
       testLoad3();
       testDisplay1();
       testDisplay2();
+      testDisplay3();
+      testRefresh1();
+      testRefresh2();
+      testSave();
+      testClear();
+      testAjoutPanier1();
+      testAjoutPanier2();
+      testPanierCommande1();
+      testPanierCommande2();
+      testPanierCommande3();
 
       compteur();
     });

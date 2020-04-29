@@ -18,7 +18,6 @@ function testAdd1() {
     testAddResult1.innerHTML='Simple add success!!!';
     testOk++;
   }
-
 };
 
 function testAdd2() {
@@ -330,6 +329,7 @@ function testLoad3() {
   localStorage.removeItem("liste_produits_panier");
   //test ajout objet complet
   let testLoad3=document.getElementById("testLoad3");
+  Panier.clear();
   Panier.load();
   if (Panier.count()!==0){
     testLoad3.innerHTML='Empty load failed!';
@@ -350,7 +350,6 @@ function testDisplay1(){
   Panier.save();
   Panier.display();
   let valide=true;
-  //for (let i=0; i<Panier.count(); i++){
       let ligne=document.querySelectorAll('#panier tr');
       let element=ligne[0].querySelectorAll('td');
         if(Panier.count()!==ligne.length){
@@ -376,9 +375,11 @@ function testDisplay1(){
         }
         if (valide==false){
           testDisplay1.innerHTML="Simple Display failed";
+          testPasOk++;
         }
         else{
           testDisplay1.innerHTML="Simple Display success";
+          testOk++;
         }
 };
 
@@ -397,7 +398,6 @@ function testDisplay2(){
   if(Panier.count()!==ligne.length){
     valide=false;
   }
-  console.log(Panier.count());
   for (let i=0; i<Panier.count(); i++){
       let element=ligne[i].querySelectorAll('td');
         if(ligne[i].getAttribute("id")!==("panier-"+ Panier.get(i).id)){
@@ -421,10 +421,331 @@ function testDisplay2(){
       }
         if (valide==false){
           testDisplay2.innerHTML="Simple Display failed";
+          testPasOk++;
         }
         else{
           testDisplay2.innerHTML="Simple Display success";
+          testOk++;
         }
+};
+
+function testDisplay3(){
+  let testDisplay3=document.getElementById("testDisplay3");
+  let panier=document.getElementById("panier");
+  panier.setAttribute("id", "panierInactif");
+  panier.innerHTML="";
+  Panier.clear();
+  Panier.add("idone","Calinours",2,1000);
+  Panier.display();
+  if (panier.innerHTML!==""){
+    testDisplay3.innerHTML="Empty Display failed";
+    testPasOk++;
+  }
+  else{
+    testDisplay3.innerHTML="Empty Display success";
+    testOk++;
+  }
+  panier.setAttribute("id", "panier");
+}
+
+
+function testRefresh1(){
+  let testRefresh1=document.getElementById("testRefresh1");
+  let panier=document.getElementById("panier");
+  Panier.clear();
+  Panier.add("idone","Calinours",2,1000);
+  Panier.save();
+  Panier.refresh();
+  let valide=true;
+      let ligne=document.querySelectorAll('#panier tr');
+      let element=ligne[0].querySelectorAll('td');
+        if(Panier.count()!==ligne.length){
+          valide=false;
+        }
+        if(ligne[0].getAttribute("id")!==("panier-"+ Panier.get(0).id)){
+          valide=false;
+        }
+        if(element.length!==2){
+          valide=false;
+        }
+        if(element[0].getAttribute("class")!==("pdt")){
+          valide=false;
+        }
+        if(element[0].innerHTML!==Panier.get(0).name){
+          valide=false;
+        }
+        if(element[1].getAttribute("class")!==("qte")){
+          valide=false;
+        }
+        if(element[1].innerHTML!=Panier.get(0).qty){
+          valide=false;
+        }
+        if (valide==false){
+          testRefresh1.innerHTML="Simple Refresh failed";
+          testPasOk++;
+        }
+        else{
+          testRefresh1.innerHTML="Simple Refresh success";
+          testOk++;
+        }
+}
+
+function testRefresh2(){
+  let testRefresh2=document.getElementById("testRefresh2");
+  let panier=document.getElementById("panier");
+  Panier.clear();
+  Panier.add("idone","Calinours",2,1000);
+  Panier.add("idtwo","Calinours",1, 1000);
+  Panier.add("idthree","Nours",1, 1020);
+  Panier.save();
+  Panier.refresh();
+  let valide=true;
+  let ligne=document.querySelectorAll('#panier tr');
+  if(Panier.count()!==ligne.length){
+    valide=false;
+  }
+  for (let i=0; i<Panier.count(); i++){
+      let element=ligne[i].querySelectorAll('td');
+        if(ligne[i].getAttribute("id")!==("panier-"+ Panier.get(i).id)){
+        valide=false;
+        }
+        if(element.length!==2){
+          valide=false;
+        }
+        if(element[0].getAttribute("class")!==("pdt")){
+          valide=false;
+        }
+        if(element[0].innerHTML!==Panier.get(i).name){
+          valide=false;
+        }
+        if(element[1].getAttribute("class")!==("qte")){
+          valide=false;
+        }
+        if(element[1].innerHTML!=Panier.get(i).qty){
+          valide=false;
+        }
+      }
+        if (valide==false){
+          testRefresh2.innerHTML="Middle Refresh failed";
+          testPasOk++;
+        }
+        else{
+          testRefresh2.innerHTML="Middle Refresh success";
+          testOk++;
+        }
+};
+
+function testSave(){
+  let testSave=document.getElementById("testSave");
+  localStorage.removeItem("liste_produits_panier");
+  Panier.add("idone","Calinours",2,1000);
+  Panier.save();
+  let panier_sauvegarde = JSON.parse(localStorage.getItem("liste_produits_panier"));
+  if ((panier_sauvegarde[0].id!== "idone")|| (panier_sauvegarde[0].name!== "Calinours") || (panier_sauvegarde[0].qty !== 2) || (panier_sauvegarde[0].price!== 1000)){
+    testSave.innerHTML='Simple save failed!';
+    testPasOk++;
+  }
+  else{
+    testSave.innerHTML='Simple save success!!!';
+    testOk++;
+  }
+}
+
+function testClear(){
+  let testClear=document.getElementById("testClear");
+  Panier.add("idone","Calinours",2,1000);
+  Panier.clear();
+  if (Panier.get(0)!== null){
+    testClear.innerHTML='Simple clear failed!';
+    testPasOk++;
+  }
+  else{
+    testClear.innerHTML='Simple clear success!!!';
+    testOk++;
+  }
+}
+
+function testAjoutPanier1(){
+  let testAjoutPanier1=document.getElementById("testAjoutPanier1")
+  Panier.clear();
+  localStorage.removeItem("liste_produits_panier");
+  ajout_panier("idone");
+  let panier_sauvegarde = JSON.parse(localStorage.getItem("liste_produits_panier"));
+  if ((panier_sauvegarde[0].name!== "Calinours") || (panier_sauvegarde[0].qty !== 2) || (panier_sauvegarde[0].price!= 1000)){
+    testAjoutPanier1.innerHTML='Simple ajout_panier failed!';
+    testPasOk++;
+  }
+  else{
+    testAjoutPanier1.innerHTML='Simple ajout_panier success!!!';
+    testOk++;
+  }
+}
+
+function testAjoutPanier2(){
+  let testAjoutPanier2=document.getElementById("testAjoutPanier2")
+  Panier.clear();
+  localStorage.removeItem("liste_produits_panier");
+  Panier.add("idone","Calinours",2,1000);
+  ajout_panier("idone");
+  let panier_sauvegarde = JSON.parse(localStorage.getItem("liste_produits_panier"));
+  if ((panier_sauvegarde[0].name!== "Calinours") || (panier_sauvegarde[0].qty !== 4) || (panier_sauvegarde[0].price!= 1000)){
+    testAjoutPanier2.innerHTML='Middle ajout_panier failed!';
+    testPasOk++;
+  }
+  else{
+    testAjoutPanier2.innerHTML='Middle ajout_panier success!!!';
+    testOk++;
+  }
+};
+
+function testPanierCommande1(){
+  let testPanierCommande1=document.getElementById("testPanierCommande1");
+  Panier.clear();
+  localStorage.removeItem("liste_produits_panier");
+  Panier.add("idone","Calinours",2,1000);
+  panierCommande();
+  let valide=true;
+  let ligne=document.querySelectorAll('#panier_commande  tr');
+  if(Panier.count()!==(ligne.length)){
+      valide=false;
+    }
+    if(ligne[0].getAttribute("id")!==("panier_commande-"+Panier.get(0).id)){
+      valide=false;
+    }
+    let element=ligne[0].querySelectorAll('td');
+    if(element.length!==4){
+      valide=false;
+    }
+    if(element[0].getAttribute("class")!==("pdt")){
+      valide=false;
+    }
+    if(element[0].innerHTML!==Panier.get(0).name){
+      valide=false;
+    }
+    if(element[1].getAttribute("class")!==("prix")){
+      valide=false;
+    }
+    if(element[1].innerHTML!=(Panier.get(0).price + " €")){
+      valide=false;
+    }
+    if(element[2].getAttribute("class")!==("qt")){
+      valide=false;
+    }
+    if(element[2].innerHTML!=Panier.get(0).qty){
+      valide=false;
+    }
+    if(element[3].getAttribute("class")!==("st")){
+      valide=false;
+    }
+    if(element[3].innerHTML!=((Panier.get(0).qty*Panier.get(0).price) + " €")){
+      valide=false;
+    }
+    /*letotalHT=document.getElementById("totalHT");
+    nouveau_HT=document.createElement('td');
+    nouveau_HT.setAttribute("class","ht");
+    letotalHT.appendChild(nouveau_HT);
+    nouveau_HT.innerHTML=totalHT+ "&nbsp;&euro;";
+    latva=document.getElementById("tva");
+    nouveau_tva=document.createElement('td');
+    nouveau_tva.setAttribute("class","tva");
+    latva.appendChild(nouveau_tva);
+    nouveau_tva.innerHTML=tva+ "&nbsp;&euro;";
+    lettc=document.getElementById("ttc");
+    nouveau_ttc=document.createElement('td');
+    nouveau_ttc.setAttribute("class","ttc");
+    lettc.appendChild(nouveau_ttc);
+    nouveau_ttc.innerHTML=ttc+ "&nbsp;&euro;";
+    localStorage.setItem("ttc", ttc);*/
+
+    if (valide==false){
+      testPanierCommande1.innerHTML="Simple panier_commande failed";
+      testPasOk++;
+    }
+    else{
+      testPanierCommande1.innerHTML="Simple panier_commande success";
+      testOk++;
+    }
+};
+
+
+function testPanierCommande2(){
+  let testPanierCommande2=document.getElementById("testPanierCommande2");
+  Panier.clear();
+  localStorage.removeItem("liste_produits_panier");
+  let panier_commande=document.getElementById("panier_commande");
+  panier_commande.innerHTML="";
+  Panier.add("idone","Calinours",2,1000);
+  Panier.add("idtwo","Calinours",1, 1000);
+  Panier.add("idthree","Nours",1, 1020);
+  panierCommande();
+  let valide=true;
+  let ligne=document.querySelectorAll('#panier_commande tr');
+    if(Panier.count()!==(ligne.length)){
+      valide=false;
+    }
+    for(let i=0 ; i<Panier.count() ; i++){
+      if(ligne[i].getAttribute("id")!==("panier_commande-"+ Panier.get(i).id)){
+        valide=false;
+      }
+    let element=ligne[i].querySelectorAll('td');
+      if(element.length!==4){
+        valide=false;
+      }
+      if(element[0].getAttribute("class")!==("pdt")){
+        valide=false;
+      }
+      if(element[0].innerHTML!==Panier.get(i).name){
+        valide=false;
+      }
+      if(element[1].getAttribute("class")!==("prix")){
+        valide=false;
+      }
+      if(element[1].innerHTML!=(Panier.get(i).price + " €")){
+        valide=false;
+      }
+      if(element[2].getAttribute("class")!==("qt")){
+        valide=false;
+      }
+      if(element[2].innerHTML!=Panier.get(i).qty){
+        valide=false;
+      }
+      if(element[3].getAttribute("class")!==("st")){
+        valide=false;
+      }
+      if(element[3].innerHTML!=((Panier.get(i).qty*Panier.get(i).price) + " €")){
+        valide=false;
+      }
+    }
+
+    if (valide==false){
+      testPanierCommande2.innerHTML="Middle panier_commande failed";
+      testPasOk++;
+    }
+    else{
+      testPanierCommande2.innerHTML="Middle panier_commande success";
+      testOk++;
+    }
+};
+
+function testPanierCommande3(){
+  let testPanierCommande3=document.getElementById("testPanierCommande3")
+  let panier_commande=document.getElementById("panier_commande");
+  panier_commande.innerHTML="";
+  Panier.clear();
+  localStorage.removeItem("liste_produits_panier");
+  panierCommande();
+  let valide=true;
+    if(Panier.count()!==(0)){
+      valide=false;
+    }
+    if (valide==false){
+      testPanierCommande3.innerHTML="Empty panier_commande failed";
+      testPasOk++;
+    }
+    else{
+      testPanierCommande3.innerHTML="Empty panier_commande success";
+      testOk++;
+    }
 };
 
 //fonction de comptage du nombre et du pourcentage de tests réussis et échoués

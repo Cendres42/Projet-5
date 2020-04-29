@@ -27,16 +27,16 @@ let Panier = (function() {
       };
 
     /**
-     * @brief méthode vidant le panier
-     */
+      * @brief méthode vidant le panier
+      */
      let clear=function(){
        products=[];
      };
 
     /**
-     * @brief méthode comptant le nbe de produits différents dans le panier
-     * @return nombre de produits actuellement dans le panier
-     */
+      * @brief méthode comptant le nbe de produits différents dans le panier
+      * @return nombre de produits actuellement dans le panier
+      */
     let count = function() {
         return(products.length);
     };
@@ -168,10 +168,12 @@ function ajout_panier(id){
   else{
     Panier.add(product_id, product_name, product_qty, product_price);
   }
-  // reconstruction si changement quantité puis sauvegarde panier dans cession
+  // reconstruction puis sauvegarde panier dans cession
   Panier.refresh();
   Panier.save();
 }
+
+
 
 /**
   * @brief objet permettant de manipuler le catalogue des produits
@@ -181,76 +183,67 @@ function ajout_panier(id){
   let produits=[];
 
   /**
-    * @brief méthode permettant de compter le nombre de produits
-    * @return la longueur du tableau de produits
-    */
-  let count = function() {
-  return(produits.length);
-  };
-
-  /**
     * @brief permet de consulter un des produits chargé depuis le serveur
     * @param  index position de l'élément recherché
     * @return l'un des produits du catalogue
     */
-    let get =function(index){
-        return(produits[index]);
-    }
+  let get =function(index){
+      return(produits[index]);
+  }
 
-    /**
-      * @brief méthode permettant de récupérer une fiche produit
-      * @param id identifiant du produit
-      * @return une promesse qui résolue renverra l'objet ours contenant la fiche
-      */
-    let getById =function(id){
-        let getByIdPromise=new Promise(function(resolve, reject) {
-            let request = new XMLHttpRequest();
-            request.onreadystatechange = function() {
-              // vérification serveur a répondu et requête est un succès
-                if(this.readyState==XMLHttpRequest.DONE && this.status==200){
-                  let ours=(JSON.parse(this.responseText));
-                  resolve(ours);
-                }
-              }
-              //envoi de la requête au serveur en précisant id du produit
-              request.open("GET", "http://localhost:3000/api/teddies/"+id);
-              request.send();
-            });
-            return(getByIdPromise);
+  /**
+    * @brief méthode permettant de récupérer une fiche produit
+    * @param id identifiant du produit
+    * @return une promesse qui résolue renverra l'objet ours contenant la fiche
+    */
+  let getById =function(id){
+      let getByIdPromise=new Promise(function(resolve, reject) {
+          let request = new XMLHttpRequest();
+          request.onreadystatechange = function() {
+            // vérification serveur a répondu et requête est un succès
+            if(this.readyState==XMLHttpRequest.DONE && this.status==200){
+                let ours=(JSON.parse(this.responseText));
+                resolve(ours);
+            }
           }
+          //envoi de la requête au serveur en précisant id du produit
+          request.open("GET", "http://localhost:3000/api/teddies/"+id);
+          request.send();
+      });
+      return(getByIdPromise);
+  }
 
   /**
     * @brief méthode permettant de charger les produits du catalogue
     * @return une promesse qui résolue renverra le nombre de pdts récupérés
     */
-    let load = function(){
-      let loadPromise=new Promise(function(resolve, reject) {
-          let request = new XMLHttpRequest();
-          request.onreadystatechange = function() {
-              // vérification serveur a répondu et requête est un succès
-              if(this.readyState==XMLHttpRequest.DONE && this.status==200){
-                let tousLesOurs=(JSON.parse(this.responseText));
-                // création tableau ours si inexistant
-                if (tousLesOurs==null){
-                  tousLesOurs=[];
-                }
-                // insert dans tableau produits chaque produit renvoyé par serveur
-                for (let i=0; i<tousLesOurs.length;i++){
-                  let ours=tousLesOurs[i];
-                  produits.push(ours);
-                }
-                resolve(produits.length);
+  let load = function(){
+    let loadPromise=new Promise(function(resolve, reject) {
+        let request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            // vérification serveur a répondu et requête est un succès
+            if(this.readyState==XMLHttpRequest.DONE && this.status==200){
+              let tousLesOurs=(JSON.parse(this.responseText));
+              // création tableau ours si inexistant
+              if (tousLesOurs==null){
+                tousLesOurs=[];
               }
+              // insert dans tableau produits chaque produit renvoyé par serveur
+              for (let i=0; i<tousLesOurs.length;i++){
+                let ours=tousLesOurs[i];
+                produits.push(ours);
+              }
+              resolve(produits.length);
             }
-              // envoi de la requête au serveur
-            request.open("GET", "http://localhost:3000/api/teddies/");
-            request.send();
-          });
-        return(loadPromise);
-      }
+          }
+          // envoi de la requête au serveur
+          request.open("GET", "http://localhost:3000/api/teddies/");
+          request.send();
+        });
+      return(loadPromise);
+    }
 
       return {
-        count: count,
         load:   load,
         get: get,
         getById: getById
@@ -258,7 +251,7 @@ function ajout_panier(id){
     })();
 
     // fonction qui construit le panier et calcul le montant de la commande
-    function panier_commande(){
+    function panierCommande(){
       //déclaration des variables
       let totalHT=0;
       let letotalHT="";
@@ -294,7 +287,7 @@ function ajout_panier(id){
         sous_total.setAttribute("class","st");
         nouvelle_ligne_cmd.appendChild(sous_total);
         let sous_total_value=new_product.qty*new_product.price;
-        sous_total.innerHTML=sous_total_value+ "&nbsp;&euro;";
+        sous_total.innerHTML=sous_total_value+ " &euro;";
         totalHT=totalHT+sous_total_value;
       }
       //calcul du montant de la commande et sauvegarde des données
