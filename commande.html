@@ -28,12 +28,6 @@
   </div>
   <script>
     // une fois commande validée, fonction de récupération n°commande et montant
-      function commande_valide(){
-          objet_commande=localStorage.getItem("id_commande");
-          document.querySelector("#commande span").innerHTML=objet_commande;
-          document.querySelector("#montant span").innerHTML=localStorage.getItem("ttc");
-      }
-
       window.addEventListener("load", function(){
       commande_valide()
       });

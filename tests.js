@@ -763,38 +763,124 @@ function testPanierCommande3(){
     }
 };
 
-function testVerifier(){
-    verifier(event);
+function testVerifier1(){
+    //affectation de la valeur retournée par fonction verifier
+    let testVerifier1=document.getElementById("testVerifier1");
     let valide=true;
-    nom="";
-    prenom="";
-    adresse="";
-    if(missNom.innerHTML!=="Veuillez entrez un nom"){
+    let nom = document.getElementById('nom');
+    nom.value="";
+    let prenom = document.getElementById('prenom');
+    prenom.value="";
+    let adresse = document.getElementById('adresse');
+    adresse.value="";
+    let ville = document.getElementById('ville');
+    ville.value="";
+    let email = document.getElementById('email');
+    email.value="";
+    let resultat=verifier();
+    let missNom = document.getElementById('missNom');
+    let missPrenom = document.getElementById('missPrenom');
+    let missAdresse = document.getElementById('missAdresse');
+    let missVille = document.getElementById('missVille');
+    let missEmail = document.getElementById('missEmail');
+    if(missNom.innerHTML!=="Veuillez entrer un nom"){
         valide=false;
     }
-    if(missPrenom.innerHTML!=="Veuillez entrez un prénom"){
+    if(missPrenom.innerHTML!=="Veuillez entrer un prénom"){
         valide=false;
     }
-    if(adresse.innerHTML!=="Veuillez entrez une adresse postale valide"){
+    if(missAdresse.innerHTML!=="Veuillez entrer une adresse postale valide"){
       valide=false;
     }
-    if(ville.innerHTML!=="Veuillez entrez un nom de ville"){
+    if(missVille.innerHTML!=="Veuillez entrer un nom de ville"){
       valide=false;
     }
-   if(email.innerHTML!=="Veuillez entrez un email valide"){
+    if(missEmail.innerHTML!=="Veuillez entrer un email valide"){
       valide=false;
     }
-  if(window.location.search!=="https://cendres42.github.io/Projet-5/panier.html#panier"){
+    if(resultat==true){
      valide=false;
     }
     if (valide==false){
-      testVerifier1.innerHTML="Empty panier_commande failed";
+      testVerifier1.innerHTML="Empty verifier failed";
       testPasOk++;
     }
     else{
-      testVerifier1.innerHTML="Empty panier_commande success";
+      testVerifier1.innerHTML="Empty verifier success";
       testOk++;
     }
+}
+
+function testVerifier2(){
+    let testVerifier2=document.getElementById("testVerifier2");
+    let valide=true;
+    let nom = document.getElementById('nom');
+    nom.value="David";
+    let prenom = document.getElementById('prenom');
+    prenom.value="Paul";
+    let adresse = document.getElementById('adresse');
+    adresse.value="12 rue des Lys";
+    let ville = document.getElementById('ville');
+    ville.value="Nantes";
+    let email = document.getElementById('email');
+    email.value="pdavid@gmail.com";
+    let missNom = document.getElementById('missNom');
+    let missPrenom = document.getElementById('missPrenom');
+    let missAdresse = document.getElementById('missAdresse');
+    let missVille = document.getElementById('missVille');
+    let missEmail = document.getElementById('missEmail');
+    missNom.innerHTML="";
+    missPrenom.innerHTML="";
+    missAdresse.innerHTML="";
+    missVille.innerHTML="";
+    missEmail.innerHTML="";
+    let resultat=verifier();
+    if(missNom.innerHTML!==""){
+        valide=false;
+    }
+    if(missPrenom.innerHTML!==""){
+        valide=false;
+    }
+    if(missAdresse.innerHTML!==""){
+      valide=false;
+    }
+    if(missVille.innerHTML!==""){
+      valide=false;
+    }
+    if(missEmail.innerHTML!==""){
+      valide=false;
+    }
+    if(resultat!==true){
+     valide=false;
+    }
+    if (valide==false){
+      testVerifier2.innerHTML="Simple verifier failed";
+      testPasOk++;
+    }
+    else{
+      testVerifier2.innerHTML="Simple verifier success";
+      testOk++;
+    }
+}
+
+function testCommandeValide1(){
+  let valide=true;
+  let testCommandeValide1=document.getElementById("testCommandeValide1");
+  commande_valide();
+ if(document.querySelector("#commande span").innerHTML!==localStorage.getItem("id_commande")){
+    valide=false;
+  }
+  if(document.querySelector("#montant span").innerHTML!==(localStorage.getItem("ttc"))){
+    valide=false
+  }
+  if (valide==false){
+    testCommandeValide1.innerHTML="Simple commande_valide failed";
+    testPasOk++;
+  }
+  else{
+    testCommandeValide1.innerHTML="Simple commande_valide success";
+    testOk++;
+  }
 }
 
 

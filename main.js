@@ -339,3 +339,8 @@ function ajout_panier(id){
       //envoi objet commande
       request.send(JSON.stringify(commande));
     }
+
+    function commande_valide(){
+        document.querySelector("#commande span").innerHTML=localStorage.getItem("id_commande");
+        document.querySelector("#montant span").innerHTML=localStorage.getItem("ttc");
+    }

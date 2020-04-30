@@ -101,7 +101,9 @@
   </div>
   <div id="testVerifier2">
   </div>
-  <div id="testVerifier3">
+
+  <p> Résultat tests fonction "envoi_commande":</p>
+  <div id="testCommandeValide1">
   </div>
 
 
@@ -142,7 +144,7 @@
   </div>
 
   <!--html pour test fonction panier_commande-->
-    <section id="table_panier">
+    <section id="table_panier" class="todisapear">
         <h2> Votre panier:</h2>
          <table id="panierPourCommande">
           <thead>
@@ -172,7 +174,8 @@
         </table>
       </section>
 
-      <div id="formulaire"class="todisapear">
+      <!--html pour test fonction verifier-->
+      <div id="formulaire" class="todisapear" >
         <p> Pour pouvoir valider votre commande, veuillez remplir toutes les rubriques de ce formulaire, merci! </p>
         <form  novalidate name="client" id="form_1"> <!--method="post" action="http://localhost:3000/api/teddies"-->
           <div class="form-group">
@@ -203,6 +206,19 @@
          <button id="envoi" class="button" type="submit">Passer la commande </button>
        </form>
      </div>
+
+     <!--html pour test fonction commande_valide-->
+    <div class="todisapear">
+     <div id="commande">
+       <p> Merci pour votre commande numéro <span></span><p>
+     </div>
+     <div id="montant">
+       <p> Le montant à payer est de :&nbsp;<span></span> €<p>
+     </div>
+   </div>
+
+
+
   <script>
     window.addEventListener("load", function(){
       testAdd1();
@@ -235,7 +251,9 @@
       testPanierCommande1();
       testPanierCommande2();
       testPanierCommande3();
-      testVerifier();
+      testVerifier1();
+      testVerifier2();
+      testCommandeValide1();
 
       compteur();
     });
