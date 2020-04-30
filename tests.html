@@ -5,6 +5,7 @@
 	  <link rel="stylesheet" type="text/css" href="style.css">
     <script src="tests.js" defer> </script>
     <script src="main.js" defer> </script>
+    <script src="panier.js" defer> </script>
 
 </head>
 
@@ -95,6 +96,14 @@
   </div>
   <div id="testPanierCommande3">
   </div>
+  <p> Résultat tests fonction "verifier":</p>
+  <div id="testVerifier1">
+  </div>
+  <div id="testVerifier2">
+  </div>
+  <div id="testVerifier3">
+  </div>
+
 
 
 
@@ -147,20 +156,53 @@
           <tbody id="panier_commande">
           </tbody>
           <tfoot>
-            <tr id="totalHT">
+            <tr id="totalHT" class="math">
               <td colspan="3">Total HT</td>
+              <td class="ht"></td>
             </tr>
-            <tr id="tva">
+            <tr id="tva" class="math">
               <td colspan="3">TVA</td>
+              <td class="tva"></td>
             </tr>
-            <tr id="ttc">
+            <tr id="ttc" class="math">
               <td colspan="3"> Net à payer</td>
+              <td class="ttc"></td>
             </tr>
           </tfoot>
         </table>
       </section>
 
-
+      <div id="formulaire"class="todisapear">
+        <p> Pour pouvoir valider votre commande, veuillez remplir toutes les rubriques de ce formulaire, merci! </p>
+        <form  novalidate name="client" id="form_1"> <!--method="post" action="http://localhost:3000/api/teddies"-->
+          <div class="form-group">
+            <label class="label" for="nom">	Nom	</label>
+            <input type="text" name="nom" id="nom" title="nom" class="form-control" pattern="[A-Za-z]{3,20}" required/>
+            <span id="missNom"></span>
+          </div>
+          <div class="form-group">
+              <label class="label" for="prenom">	Prénom	</label>
+              <input type="text" name="prenom" id="prenom" title="prénom" class="form-control" pattern="[A-Za-z]{3,20}" required />
+              <span id="missPrenom"></span>
+          </div>
+          <div class="form-group">
+              <label class="label" for="adresse">	Adresse	</label>
+              <input type="text" name= "adresse" id="adresse" title=" adresse" class="form-control" minlength="8" required  />
+              <span id="missAdresse"></span>
+          </div>
+          <div class="form-group">
+              <label class="label" for="ville">	Ville	</label>
+              <input type="text" name= "ville" id="ville" title=" ville" class="form-control" minlength="3" required  />
+              <span id="missVille"></span>
+          </div>
+          <div class="form-group">
+              <label class="label" for="email">	Adresse email	</label>
+              <input type="email" name="email" id="email" title= "adresse mail" class="form-control" required />
+              <span id="missEmail"></span>
+          </div>
+         <button id="envoi" class="button" type="submit">Passer la commande </button>
+       </form>
+     </div>
   <script>
     window.addEventListener("load", function(){
       testAdd1();
@@ -193,6 +235,7 @@
       testPanierCommande1();
       testPanierCommande2();
       testPanierCommande3();
+      testVerifier();
 
       compteur();
     });

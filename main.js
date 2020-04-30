@@ -258,9 +258,7 @@ function ajout_panier(id){
       let tva=0;
       let ttc=0;
       let latva="";
-      let nouveau_tva="";
       let lettc="";
-      let nouveau_ttc="";
 
       let new_product={};
       //récupération du contenu du panier pour préparer le tableau commande
@@ -293,21 +291,12 @@ function ajout_panier(id){
       //calcul du montant de la commande et sauvegarde des données
         tva=totalHT*0.2;
         ttc=totalHT+tva;
-        letotalHT=document.getElementById("totalHT");
-        nouveau_HT=document.createElement('td');
-        nouveau_HT.setAttribute("class","ht");
-        letotalHT.appendChild(nouveau_HT);
-        nouveau_HT.innerHTML=totalHT+ "&nbsp;&euro;";
-        latva=document.getElementById("tva");
-        nouveau_tva=document.createElement('td');
-        nouveau_tva.setAttribute("class","tva");
-        latva.appendChild(nouveau_tva);
-        nouveau_tva.innerHTML=tva+ "&nbsp;&euro;";
-        lettc=document.getElementById("ttc");
-        nouveau_ttc=document.createElement('td');
-        nouveau_ttc.setAttribute("class","ttc");
-        lettc.appendChild(nouveau_ttc);
-        nouveau_ttc.innerHTML=ttc+ "&nbsp;&euro;";
+        let nouveau_HT=document.getElementsByClassName("ht")
+        nouveau_HT[0].innerHTML=totalHT+ " &euro;";
+        latva=document.getElementsByClassName("tva");
+        latva[0].innerHTML=tva+ " &euro;";
+        lettc=document.getElementsByClassName("ttc");
+        lettc[0].innerHTML=ttc+ " &euro;";
         localStorage.setItem("ttc", ttc);
     }
 

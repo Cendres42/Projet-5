@@ -602,6 +602,8 @@ function testPanierCommande1(){
   let testPanierCommande1=document.getElementById("testPanierCommande1");
   Panier.clear();
   localStorage.removeItem("liste_produits_panier");
+  let panier_commande=document.getElementById("panier_commande");
+  panier_commande.innerHTML="";
   Panier.add("idone","Calinours",2,1000);
   panierCommande();
   let valide=true;
@@ -640,23 +642,31 @@ function testPanierCommande1(){
     if(element[3].innerHTML!=((Panier.get(0).qty*Panier.get(0).price) + " €")){
       valide=false;
     }
-    /*letotalHT=document.getElementById("totalHT");
-    nouveau_HT=document.createElement('td');
-    nouveau_HT.setAttribute("class","ht");
-    letotalHT.appendChild(nouveau_HT);
-    nouveau_HT.innerHTML=totalHT+ "&nbsp;&euro;";
-    latva=document.getElementById("tva");
-    nouveau_tva=document.createElement('td');
-    nouveau_tva.setAttribute("class","tva");
-    latva.appendChild(nouveau_tva);
-    nouveau_tva.innerHTML=tva+ "&nbsp;&euro;";
-    lettc=document.getElementById("ttc");
-    nouveau_ttc=document.createElement('td');
-    nouveau_ttc.setAttribute("class","ttc");
-    lettc.appendChild(nouveau_ttc);
-    nouveau_ttc.innerHTML=ttc+ "&nbsp;&euro;";
-    localStorage.setItem("ttc", ttc);*/
-
+    let calcul=document.querySelectorAll("tr.math");
+    let montantHT=calcul[0].querySelectorAll('td');
+    let montantTVA=calcul[1].querySelectorAll('td');
+    let montantTTC=calcul[2].querySelectorAll('td');
+    if(montantHT[1].getAttribute("class") !==("ht")){
+        valide=false;
+    }
+    if(montantHT[1].innerHTML!=(element[3].innerHTML)){
+      valide=false;
+    }
+   if (montantTVA[1].getAttribute("class") !==("tva")){
+     valide=false;
+   }
+    if (montantTVA[1].innerHTML!=(parseInt(montantHT[1].innerHTML,10)*0.2 +" €")){
+      valide=false;
+    }
+    if(montantTTC[1].getAttribute("class")!==("ttc")){
+      valide=false;
+    }
+    if(montantTTC[1].innerHTML!=((parseInt(montantTVA[1].innerHTML,10))+(parseInt(montantHT[1].innerHTML,10))+" €")){
+      valide=false;
+    }
+    if((localStorage.getItem("ttc")+" €") != (montantTTC[1].innerHTML)){
+      valide=false;
+    }
     if (valide==false){
       testPanierCommande1.innerHTML="Simple panier_commande failed";
       testPasOk++;
@@ -680,6 +690,7 @@ function testPanierCommande2(){
   panierCommande();
   let valide=true;
   let ligne=document.querySelectorAll('#panier_commande tr');
+  let calculMontantHT=0;
     if(Panier.count()!==(ligne.length)){
       valide=false;
     }
@@ -691,32 +702,36 @@ function testPanierCommande2(){
       if(element.length!==4){
         valide=false;
       }
-      if(element[0].getAttribute("class")!==("pdt")){
-        valide=false;
-      }
       if(element[0].innerHTML!==Panier.get(i).name){
-        valide=false;
-      }
-      if(element[1].getAttribute("class")!==("prix")){
         valide=false;
       }
       if(element[1].innerHTML!=(Panier.get(i).price + " €")){
         valide=false;
       }
-      if(element[2].getAttribute("class")!==("qt")){
-        valide=false;
-      }
       if(element[2].innerHTML!=Panier.get(i).qty){
         valide=false;
       }
-      if(element[3].getAttribute("class")!==("st")){
+     if(element[3].innerHTML!=((Panier.get(i).qty*Panier.get(i).price) + " €")){
         valide=false;
       }
-      if(element[3].innerHTML!=((Panier.get(i).qty*Panier.get(i).price) + " €")){
-        valide=false;
-      }
+    calculMontantHT= calculMontantHT+(parseInt(element[3].innerHTML,10));
     }
-
+    let calcul=document.querySelectorAll("tr.math");
+    let montantHT=calcul[0].querySelectorAll('td');
+    let montantTVA=calcul[1].querySelectorAll('td');
+    let montantTTC=calcul[2].querySelectorAll('td');
+    if(montantHT[1].innerHTML!=(calculMontantHT+" €")){
+      valide=false;
+    }
+    if (montantTVA[1].innerHTML!=(calculMontantHT)*0.2 +" €"){
+      valide=false;
+    }
+    if(montantTTC[1].innerHTML!=((parseInt(montantTVA[1].innerHTML,10))+(calculMontantHT)+" €")){
+      valide=false;
+    }
+    if((localStorage.getItem("ttc")+" €") != (montantTTC[1].innerHTML)){
+      valide=false;
+    }
     if (valide==false){
       testPanierCommande2.innerHTML="Middle panier_commande failed";
       testPasOk++;
@@ -747,6 +762,44 @@ function testPanierCommande3(){
       testOk++;
     }
 };
+
+function testVerifier(){
+    verifier(event);
+    let valide=true;
+    nom="";
+    prenom="";
+    adresse="";
+    if(missNom.innerHTML!=="Veuillez entrez un nom"){
+        valide=false;
+    }
+    if(missPrenom.innerHTML!=="Veuillez entrez un prénom"){
+        valide=false;
+    }
+    if(adresse.innerHTML!=="Veuillez entrez une adresse postale valide"){
+      valide=false;
+    }
+    if(ville.innerHTML!=="Veuillez entrez un nom de ville"){
+      valide=false;
+    }
+   if(email.innerHTML!=="Veuillez entrez un email valide"){
+      valide=false;
+    }
+  if(window.location.search!=="https://cendres42.github.io/Projet-5/panier.html#panier"){
+     valide=false;
+    }
+    if (valide==false){
+      testVerifier1.innerHTML="Empty panier_commande failed";
+      testPasOk++;
+    }
+    else{
+      testVerifier1.innerHTML="Empty panier_commande success";
+      testOk++;
+    }
+}
+
+
+
+
 
 //fonction de comptage du nombre et du pourcentage de tests réussis et échoués
 function compteur(){
