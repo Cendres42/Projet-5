@@ -5,17 +5,17 @@
     <title>Orinoco nouveau site de vente en ligne par catégories</title>
     <meta name="description" content="Site de vente en ligne qui vous permet de choisir la catégorie d'articles qui vous intéresse afin qu'on ne vous présente pas d'articles non pertinents">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <link rel="shortcut icon" type="image/png" href="favicon.jpg" >
-	  <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="shortcut icon" type="image/png" href="../img/favicon.jpg" >
+	  <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
-    <script src="main.js" defer> </script>
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css">
+    <script src="../js/main.js" defer> </script>
 </head>
 
 <body>
   <header>
   <div class="hautdepage">
-    <img src="images/logo.png" alt="logo d'Orinoco"/>
+    <img src="../img/logo.png" alt="logo d'Orinoco"/>
     <h1>Orinoco</h1>
   </div>
   		<nav>
@@ -46,11 +46,21 @@
   <script >
   //chargement de la liste des produits après chargement de la page
     window.addEventListener("load", function(){
-      let promise=Produits.load();
-      promise.then(function(nbeOurs){
+      /**
+        * @brief méthode permettant de charger les produits du catalogue
+        * @return une promesse qui résolue renverra le nombre de pdts récupérés
+        */
+        let url1="http://localhost:3000/api/teddies/";
+        let load = async function(){
+          const response = await fetch(url1);
+          return response.json();
+        };
+        let promise=load();
+        promise.then(function(listeOurs){
         //insert dans la page chaque produit renvoyé par le catalogue
-        for (let i=0; i<nbeOurs;i++){
-          let ours =Produits.get(i);
+        for (let i=0; i<listeOurs.length;i++){
+          //let ours =Produits.get(i);
+          let ours=listeOurs[i];
 
           //création d'un élément conteneur pour l'un des produits
           let bears = document.getElementById("bears");

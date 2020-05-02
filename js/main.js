@@ -179,6 +179,7 @@ function ajout_panier(id){
   * @brief objet permettant de manipuler le catalogue des produits
   * @return l'objet Produits
   */
+  /*
   let Produits = (function() {
   let produits=[];
 
@@ -187,68 +188,14 @@ function ajout_panier(id){
     * @param  index position de l'élément recherché
     * @return l'un des produits du catalogue
     */
+    /*
   let get =function(index){
       return(produits[index]);
   }
-
-  /**
-    * @brief méthode permettant de récupérer une fiche produit
-    * @param id identifiant du produit
-    * @return une promesse qui résolue renverra l'objet ours contenant la fiche
-    */
-  let getById =function(id){
-      let getByIdPromise=new Promise(function(resolve, reject) {
-          let request = new XMLHttpRequest();
-          request.onreadystatechange = function() {
-            // vérification serveur a répondu et requête est un succès
-            if(this.readyState==XMLHttpRequest.DONE && this.status==200){
-                let ours=(JSON.parse(this.responseText));
-                resolve(ours);
-            }
-          }
-          //envoi de la requête au serveur en précisant id du produit
-          request.open("GET", "http://localhost:3000/api/teddies/"+id);
-          request.send();
-      });
-      return(getByIdPromise);
-  }
-
-  /**
-    * @brief méthode permettant de charger les produits du catalogue
-    * @return une promesse qui résolue renverra le nombre de pdts récupérés
-    */
-  let load = function(){
-    let loadPromise=new Promise(function(resolve, reject) {
-        let request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            // vérification serveur a répondu et requête est un succès
-            if(this.readyState==XMLHttpRequest.DONE && this.status==200){
-              let tousLesOurs=(JSON.parse(this.responseText));
-              // création tableau ours si inexistant
-              if (tousLesOurs==null){
-                tousLesOurs=[];
-              }
-              // insert dans tableau produits chaque produit renvoyé par serveur
-              for (let i=0; i<tousLesOurs.length;i++){
-                let ours=tousLesOurs[i];
-                produits.push(ours);
-              }
-              resolve(produits.length);
-            }
-          }
-          // envoi de la requête au serveur
-          request.open("GET", "http://localhost:3000/api/teddies/");
-          request.send();
-        });
-      return(loadPromise);
-    }
-
       return {
-        load:   load,
         get: get,
-        getById: getById
       };
-    })();
+    })();*/
 
     // fonction qui construit le panier et calcul le montant de la commande
     function panierCommande(){
@@ -306,10 +253,10 @@ function ajout_panier(id){
       let commande ={};
       // création nouvel objet contact
       let contact={};
-      contact.nom=document.getElementById("nom").value;
-      contact.prenom=document.getElementById("prenom").value;
-      contact.adresse=document.getElementById("adresse").value;
-      contact.ville=document.getElementById("ville").value;
+      contact.firstName=document.getElementById("nom").value;
+      contact.lastName=document.getElementById("prenom").value;
+      contact.address=document.getElementById("adresse").value;
+      contact.city=document.getElementById("ville").value;
       contact.email=document.getElementById("email").value;
       let products=[];
       for (let i=0; i<Panier.count(); i++){
