@@ -72,11 +72,10 @@
             let adresse=window.location.search;
             let id=(adresse.replace('?product_id=', ''));
             /**
-              * @brief méthode permettant de récupérer une fiche produit
-              * @param id identifiant du produit
+              * @brief fonction permettant de récupérer une fiche produit
+              * @param url2 adresse "serveur"
               * @return une promesse qui résolue renverra l'objet ours contenant la fiche
               */
-
             let url2=`http://localhost:3000/api/teddies/${id}`;
             let getById = async function(){
               const response = await fetch(url2);

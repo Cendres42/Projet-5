@@ -267,25 +267,32 @@ function ajout_panier(id){
       }
       commande.products=products;
       commande.contact=contact;
-      //initialisation objet XMLHttpRequest
-      var request=new XMLHttpRequest();
-      //gestionnaire d'évènement invoqué quand l'attribut readyState change
-      request.onreadystatechange=function(){
-        if(this.readyState==XMLHttpRequest.DONE && this.status==201){
-          var response=JSON.parse(this.responseText);
-          //récupération id de commande
-          let id_commande=response.orderId
-          localStorage.setItem("id_commande", id_commande);
-          document.location.href="commande.html";
+
+      let url3="http://localhost:3000/api/teddies/order";
+      let verifOK = async function(){
+        const promesse = await fetch(url3, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(commande),
+        });
+        return promesse;
+      };
+      let reqCommande = verifOK().then(promesse => {
+          if (!promesse.ok) {
+            alert("Une erreur interne est survenue, veuillez contacter le service client");
+            throw new Error('Network response was not ok');
           }
-      }
-      //ouverture de la requête POST
-      request.open("POST", "http://localhost:3000/api/teddies/order");
-      request.setRequestHeader("Content-Type", "application/json");
-      request.responseType='text';
-      //envoi objet commande
-      request.send(JSON.stringify(commande));
-    }
+          return promesse.json();
+        });
+      //insert dans la page chaque élément de la fiche produit renvoyée
+      reqCommande.then(function(reqCommande){
+        let id_commande=reqCommande.orderId;
+        localStorage.setItem("id_commande", id_commande);
+        document.location.href="commande.html";
+      });
+}
 
     function commande_valide(){
         document.querySelector("#commande span").innerHTML=localStorage.getItem("id_commande");
