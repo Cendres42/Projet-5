@@ -175,28 +175,6 @@ function ajout_panier(id){
 
 
 
-/**
-  * @brief objet permettant de manipuler le catalogue des produits
-  * @return l'objet Produits
-  */
-  /*
-  let Produits = (function() {
-  let produits=[];
-
-  /**
-    * @brief permet de consulter un des produits chargé depuis le serveur
-    * @param  index position de l'élément recherché
-    * @return l'un des produits du catalogue
-    */
-    /*
-  let get =function(index){
-      return(produits[index]);
-  }
-      return {
-        get: get,
-      };
-    })();*/
-
     // fonction qui construit le panier et calcul le montant de la commande
     function panierCommande(){
       //déclaration des variables
@@ -247,7 +225,7 @@ function ajout_panier(id){
         localStorage.setItem("ttc", ttc);
     }
 
-    // fonction qui envoi la commande si formulaire complet et valide
+    // fonction qui envoie la commande si formulaire complet et valide
     function envoi_commande(event){
       let nom="";
       let commande ={};

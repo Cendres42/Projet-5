@@ -6,58 +6,49 @@
       if (verifier() == true)
         envoi_commande();
     });
+
+    function verifierTexte(elementName,inputMessage){
+      let element=document.getElementById(elementName);
+      let msgErreur = document.getElementById(inputMessage);
+      if(element.validity.valueMissing){
+        msgErreur.innerHTML="Veuillez entrer un nom";
+        msgErreur.style.color="red";
+        return false;
+      }
+      else{
+        msgErreur.innerHTML="";
+        return true;
+      }
+    }
     //fonction de vérification du formulaire avant validation (en + du HTML)
     function verifier(){
       let valid=true;
-      let nom = document.getElementById('nom');
-      let missNom = document.getElementById('missNom');
-      if(nom.validity.valueMissing){
-        missNom.innerHTML="Veuillez entrer un nom";
-        missNom.style.color="red";
-        valid=false;
+        if(verifierTexte("nom","missNom") == false)
+        valid = false;
+
+      if (verifierTexte("prenom","missPrenom") == false)
+        valid = false;
+
+      if(verifierTexte("adresse","missAdresse") == false)
+        valid = false;
+      if(verifierTexte("ville","missVille")== false)
+      valid = false;
+      if (isValid()== false)
+        valid = false;
+      return valid;
+    }
+
+    function isValid() {
+      let chaine = document.getElementById("email");
+      let msgEmail = document.getElementById("missEmail");
+      const resultat = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(chaine.value);
+      if(resultat == false){
+        msgEmail.textContent="Veuillez entrer un email valide";
+        msgEmail.style.color="red";
+        return false;
       }
       else{
-        missNom.innerHTML="";
+        msgEmail.innerHTML="";
+        return true;
       }
-      let prenom = document.getElementById('prenom');
-      let missPrenom = document.getElementById('missPrenom');
-      if(prenom.validity.valueMissing){
-        missPrenom.textContent="Veuillez entrer un prénom";
-        missPrenom.style.color="red";
-        valid=false;
-      }
-      else{
-        missPrenom.innerHTML="";
-      }
-      let adresse = document.getElementById('adresse');
-      let missAdresse = document.getElementById('missAdresse');
-      if(adresse.validity.valueMissing){
-        missAdresse.textContent="Veuillez entrer une adresse postale valide";
-        missAdresse.style.color="red";
-        valid=false;
-      }
-      else{
-        missAdresse.innerHTML="";
-      }
-      let ville = document.getElementById('ville');
-      let missVille = document.getElementById('missVille');
-      if(ville.validity.valueMissing){
-        missVille.textContent="Veuillez entrer un nom de ville";
-        missVille.style.color="red";
-        valid=false;
-      }
-      else{
-        missVille.innerHTML="";
-      }
-      let email = document.getElementById('email');
-      let missEmail = document.getElementById('missEmail');
-      if(email.validity.valueMissing){
-        missEmail.textContent="Veuillez entrer un email valide";
-        missEmail.style.color="red";
-        valid=false;
-      }
-      else{
-        missEmail.innerHTML="";
-      }
-      return(valid);
-  }
+    }
