@@ -73,6 +73,9 @@
     }
     commande.products=products;
     commande.contact=contact;
+    /**
+      * @brief fonction asynchrone qui envoi la commande en POST au serveur
+      */
       let url3="http://localhost:3000/api/teddies/order";
       let verifOK = async function(){
         const promesse = await fetch(url3, {
@@ -80,24 +83,35 @@
           headers: {
             'Content-Type': 'application/json',
           },
+          //l'objet commande est envoyé en JSON
           body: JSON.stringify(commande),
         });
         return promesse;
       };
       let promise=verifOK();
-      let reqCommande = promise.then(promesse => {
-          if (!promesse.ok) {
+
+      //traitement de la réponse du serveur
+      promise.then(promesse => {
+          // si la requête a été correctement traitée par le serveur
+          if (promesse.ok) {
+            //traitement de la réponse JSON
+            promesse.json().then(function(reqCommande){
+              let id_commande=reqCommande.orderId;
+              localStorage.setItem("id_commande", id_commande);
+              document.location.href="commande.html";
+            });
+          }
+          // si la requête est arrivée au serveur mais n'a pu être traitée
+          else   {
             alert("Une erreur interne est survenue, veuillez contacter le service client");
             throw new Error('Network response was not ok');
           }
-          return promesse.json();
+        })
+        //erreur réseau ? pas de réponse du serveur
+        .catch(function(error) {
+            console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
         });
-      reqCommande.then(function(reqCommande){
-        let id_commande=reqCommande.orderId;
-        localStorage.setItem("id_commande", id_commande);
-        document.location.href="commande.html";
-      });
-  }
+    }
 
   // fonction qui construit le panier et calcule le montant de la commande
   window.addEventListener("load", function() {
