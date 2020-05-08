@@ -4,7 +4,6 @@
   */
 let Panier = (function() {
     let products=[];
-
     /**
       * @brief méthode permettant d'ajouter des produits au panier
       * @param  id identitfiant du produit
@@ -151,7 +150,6 @@ let Panier = (function() {
 
 //fonction  d'ajout de produits dans le panier au clic sur "Ajouter au panier"
 function ajout_panier(id){
-
   let product_id=id;
   //Récupération des données saisies par l'utilisateur
   let product_name=document.querySelector("#Bear h2 span.name").innerHTML;
@@ -172,107 +170,3 @@ function ajout_panier(id){
   Panier.refresh();
   Panier.save();
 }
-
-
-
-    // fonction qui construit le panier et calcul le montant de la commande
-    function panierCommande(){
-      //déclaration des variables
-      let totalHT=0;
-      let letotalHT="";
-      let tva=0;
-      let ttc=0;
-      let latva="";
-      let lettc="";
-
-      let new_product={};
-      //récupération du contenu du panier pour préparer le tableau commande
-      for (let i=0; i<Panier.count(); i++){
-        let new_product=Panier.get(i);
-        let panier_commande=document.getElementById("panier_commande");
-        let nouvelle_ligne_cmd = document.createElement('tr');
-        nouvelle_ligne_cmd.setAttribute("id","panier_commande-"+new_product.id);
-        panier_commande.appendChild(nouvelle_ligne_cmd);
-        produit_commande = document.createElement('td');
-        produit_commande.setAttribute("class","pdt");
-        nouvelle_ligne_cmd.appendChild(produit_commande);
-        produit_commande.innerHTML=new_product.name;
-        let prix= document.createElement('td');
-        prix.setAttribute("class","prix");
-        nouvelle_ligne_cmd.appendChild(prix);
-        new_product.price=parseInt(new_product.price,10);
-        prix.innerHTML=new_product.price + " &euro;";
-        qte_commande= document.createElement('td');
-        qte_commande.setAttribute("class","qt");
-        nouvelle_ligne_cmd.appendChild(qte_commande);
-        qte_commande.innerHTML= new_product.qty;
-        let sous_total= document.createElement('td');
-        sous_total.setAttribute("class","st");
-        nouvelle_ligne_cmd.appendChild(sous_total);
-        let sous_total_value=new_product.qty*new_product.price;
-        sous_total.innerHTML=sous_total_value+ " &euro;";
-        totalHT=totalHT+sous_total_value;
-      }
-      //calcul du montant de la commande et sauvegarde des données
-        tva=totalHT*0.2;
-        ttc=totalHT+tva;
-        let nouveau_HT=document.getElementsByClassName("ht")
-        nouveau_HT[0].innerHTML=totalHT+ " &euro;";
-        latva=document.getElementsByClassName("tva");
-        latva[0].innerHTML=tva+ " &euro;";
-        lettc=document.getElementsByClassName("ttc");
-        lettc[0].innerHTML=ttc+ " &euro;";
-        localStorage.setItem("ttc", ttc);
-    }
-
-    // fonction qui envoie la commande si formulaire complet et valide
-    function envoi_commande(event){
-      let nom="";
-      let commande ={};
-      // création nouvel objet contact
-      let contact={};
-      contact.firstName=document.getElementById("nom").value;
-      contact.lastName=document.getElementById("prenom").value;
-      contact.address=document.getElementById("adresse").value;
-      contact.city=document.getElementById("ville").value;
-      contact.email=document.getElementById("email").value;
-      let products=[];
-      for (let i=0; i<Panier.count(); i++){
-        let product= Panier.get(i);
-        // Convertion nom d'id name pour correspondre aux spec.
-        product._id = product.id;
-        products.push(product);
-      }
-      commande.products=products;
-      commande.contact=contact;
-
-      let url3="http://localhost:3000/api/teddies/order";
-      let verifOK = async function(){
-        const promesse = await fetch(url3, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(commande),
-        });
-        return promesse;
-      };
-      let reqCommande = verifOK().then(promesse => {
-          if (!promesse.ok) {
-            alert("Une erreur interne est survenue, veuillez contacter le service client");
-            throw new Error('Network response was not ok');
-          }
-          return promesse.json();
-        });
-      //insert dans la page chaque élément de la fiche produit renvoyée
-      reqCommande.then(function(reqCommande){
-        let id_commande=reqCommande.orderId;
-        localStorage.setItem("id_commande", id_commande);
-        document.location.href="commande.html";
-      });
-}
-
-    function commande_valide(){
-        document.querySelector("#commande span").innerHTML=localStorage.getItem("id_commande");
-        document.querySelector("#montant span").innerHTML=localStorage.getItem("ttc");
-    }
