@@ -98,11 +98,11 @@ function testCount2(){
     Panier.clear();
     //ajout objet complet
     let testCount2=document.getElementById("testCount2");
-    for (let i=0; i<1000;i++){
-    Panier.add("idone","Calinours",2,1000);
+    for (let i=0; i<100;i++){
+    Panier.add(i,"Calinours",2,1000);
     }
     let longueur=Panier.count();
-    if (longueur!== 1000){
+    if (longueur!== 100){
       testCount2.innerHTML='Big count failed!';
       testPasOk++;
     }
@@ -347,8 +347,6 @@ function testDisplay1(){
   panier.innerHTML="";
   Panier.clear();
   Panier.add("idone","Calinours",2,1000);
-  Panier.save();
-  Panier.display();
   let valide=true;
       let ligne=document.querySelectorAll('#panier tr');
       let element=ligne[0].querySelectorAll('td');
@@ -391,8 +389,6 @@ function testDisplay2(){
   Panier.add("idone","Calinours",2,1000);
   Panier.add("idtwo","Calinours",1, 1000);
   Panier.add("idthree","Nours",1, 1020);
-  Panier.save();
-  Panier.display();
   let valide=true;
   let ligne=document.querySelectorAll('#panier tr');
   if(Panier.count()!==ligne.length){
@@ -420,11 +416,11 @@ function testDisplay2(){
         }
       }
         if (valide==false){
-          testDisplay2.innerHTML="Simple Display failed";
+          testDisplay2.innerHTML="Middle Display failed";
           testPasOk++;
         }
         else{
-          testDisplay2.innerHTML="Simple Display success";
+          testDisplay2.innerHTML="Middle Display success";
           testOk++;
         }
 };
@@ -436,7 +432,6 @@ function testDisplay3(){
   panier.innerHTML="";
   Panier.clear();
   Panier.add("idone","Calinours",2,1000);
-  Panier.display();
   if (panier.innerHTML!==""){
     testDisplay3.innerHTML="Empty Display failed";
     testPasOk++;
@@ -454,8 +449,6 @@ function testRefresh1(){
   let panier=document.getElementById("panier");
   Panier.clear();
   Panier.add("idone","Calinours",2,1000);
-  Panier.save();
-  Panier.refresh();
   let valide=true;
       let ligne=document.querySelectorAll('#panier tr');
       let element=ligne[0].querySelectorAll('td');
@@ -497,8 +490,6 @@ function testRefresh2(){
   Panier.add("idone","Calinours",2,1000);
   Panier.add("idtwo","Calinours",1, 1000);
   Panier.add("idthree","Nours",1, 1020);
-  Panier.save();
-  Panier.refresh();
   let valide=true;
   let ligne=document.querySelectorAll('#panier tr');
   if(Panier.count()!==ligne.length){
@@ -536,10 +527,10 @@ function testRefresh2(){
 };
 
 function testSave(){
+  Panier.clear();
   let testSave=document.getElementById("testSave");
   localStorage.removeItem("liste_produits_panier");
   Panier.add("idone","Calinours",2,1000);
-  Panier.save();
   let panier_sauvegarde = JSON.parse(localStorage.getItem("liste_produits_panier"));
   if ((panier_sauvegarde[0].id!== "idone")|| (panier_sauvegarde[0].name!== "Calinours") || (panier_sauvegarde[0].qty !== 2) || (panier_sauvegarde[0].price!== 1000)){
     testSave.innerHTML='Simple save failed!';
@@ -564,39 +555,6 @@ function testClear(){
     testOk++;
   }
 }
-
-function testAjoutPanier1(){
-  let testAjoutPanier1=document.getElementById("testAjoutPanier1")
-  Panier.clear();
-  localStorage.removeItem("liste_produits_panier");
-  ajout_panier("idone");
-  let panier_sauvegarde = JSON.parse(localStorage.getItem("liste_produits_panier"));
-  if ((panier_sauvegarde[0].name!== "Calinours") || (panier_sauvegarde[0].qty !== 2) || (panier_sauvegarde[0].price!= 1000)){
-    testAjoutPanier1.innerHTML='Simple ajout_panier failed!';
-    testPasOk++;
-  }
-  else{
-    testAjoutPanier1.innerHTML='Simple ajout_panier success!!!';
-    testOk++;
-  }
-}
-
-function testAjoutPanier2(){
-  let testAjoutPanier2=document.getElementById("testAjoutPanier2")
-  Panier.clear();
-  localStorage.removeItem("liste_produits_panier");
-  Panier.add("idone","Calinours",2,1000);
-  ajout_panier("idone");
-  let panier_sauvegarde = JSON.parse(localStorage.getItem("liste_produits_panier"));
-  if ((panier_sauvegarde[0].name!== "Calinours") || (panier_sauvegarde[0].qty !== 4) || (panier_sauvegarde[0].price!= 1000)){
-    testAjoutPanier2.innerHTML='Middle ajout_panier failed!';
-    testPasOk++;
-  }
-  else{
-    testAjoutPanier2.innerHTML='Middle ajout_panier success!!!';
-    testOk++;
-  }
-};
 
 function testPanierCommande1(){
   let testPanierCommande1=document.getElementById("testPanierCommande1");
@@ -777,29 +735,27 @@ function testVerifier1(){
     ville.value="";
     let email = document.getElementById('email');
     email.value="";
-    let resultat=verifier();
-    let missNom = document.getElementById('missNom');
-    let missPrenom = document.getElementById('missPrenom');
+    verifier();
+    isValid();
+    let missNom     = document.getElementById('missNom');
+    let missPrenom  = document.getElementById('missPrenom');
     let missAdresse = document.getElementById('missAdresse');
-    let missVille = document.getElementById('missVille');
-    let missEmail = document.getElementById('missEmail');
-    if(missNom.innerHTML!=="Veuillez entrer un nom"){
+    let missVille   = document.getElementById('missVille');
+    let missEmail   = document.getElementById('missEmail');
+    if(missNom.innerHTML!=="Veuillez entrer un element valide"){
         valide=false;
     }
-    if(missPrenom.innerHTML!=="Veuillez entrer un prénom"){
+    if(missPrenom.innerHTML!=="Veuillez entrer un element valide"){
         valide=false;
     }
-    if(missAdresse.innerHTML!=="Veuillez entrer une adresse postale valide"){
+    if(missAdresse.innerHTML!=="Veuillez entrer un element valide"){
       valide=false;
     }
-    if(missVille.innerHTML!=="Veuillez entrer un nom de ville"){
+    if(missVille.innerHTML!=="Veuillez entrer un element valide"){
       valide=false;
     }
     if(missEmail.innerHTML!=="Veuillez entrer un email valide"){
       valide=false;
-    }
-    if(resultat==true){
-     valide=false;
     }
     if (valide==false){
       testVerifier1.innerHTML="Empty verifier failed";

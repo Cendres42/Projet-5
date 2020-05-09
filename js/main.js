@@ -4,6 +4,7 @@
   */
 let Panier = (function() {
     let products=[];
+
     /**
       * @brief méthode permettant d'ajouter des produits au panier
       * @param  id identitfiant du produit
@@ -11,18 +12,31 @@ let Panier = (function() {
       * @param qty nombre d'unités ajoutées
       * @param price prix unitaire du produit ajouté
       */
-      let add = function(_id,name,qty,price) {
+      let add = function(id,name,qty,price) {
         let args= arguments.length;
         if (args!==4){
           console.log("appel de add avec un nbe invalide d'arguments")
           return;
         }
-        let newProduct  = {};
-        newProduct.id   = _id;
-        newProduct.name = name;
-        newProduct.qty  = qty;
-        newProduct.price = price;
-        products.push(newProduct);
+        //modification quantité si produit déjà présent dans le panier
+        let index=findId(id);
+        if(index!=null){
+          let pdt=get(index)
+          let new_qty=pdt.qty + qty;
+          setQty(index,new_qty);
+        }
+        // ajout produit et quantité si nouveau produit
+        else{
+          let newProduct  = {};
+          newProduct.id   = id;
+          newProduct.name = name;
+          newProduct.qty  = qty;
+          newProduct.price = price;
+          products.push(newProduct);
+        }
+        // reconstruction puis sauvegarde panier dans cession
+        refresh();
+        save();
       };
 
     /**
@@ -113,8 +127,11 @@ let Panier = (function() {
       */
     let refresh = function(){
       let plop =document.getElementById('panier');
+      if(plop !==null)
+      {
       plop.innerHTML="";
       display();
+      }
     };
 
     /**
@@ -147,26 +164,3 @@ let Panier = (function() {
     display:display
   };
 })();
-
-//fonction  d'ajout de produits dans le panier au clic sur "Ajouter au panier"
-function ajout_panier(id){
-  let product_id=id;
-  //Récupération des données saisies par l'utilisateur
-  let product_name=document.querySelector("#Bear h2 span.name").innerHTML;
-  let product_qty=parseInt(document.getElementById("qt").value,10);
-  let product_price=document.querySelector("#Bear .prix span").innerHTML;
-  //modification quantité si produit déjà présent dans le panier
-  let index=Panier.findId(id);
-  if(index!=null){
-    let pdt=Panier.get(index)
-    let qty=pdt.qty + product_qty;
-    Panier.setQty(index,qty);
-  }
-  // ajout produit et quantité si nouveau produit
-  else{
-    Panier.add(product_id, product_name, product_qty, product_price);
-  }
-  // reconstruction puis sauvegarde panier dans cession
-  Panier.refresh();
-  Panier.save();
-}

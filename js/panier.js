@@ -10,7 +10,7 @@
       let element=document.getElementById(elementName);
       let msgErreur = document.getElementById(inputMessage);
       if(element.validity.valueMissing){
-        msgErreur.innerHTML="Veuillez entrer un nom";
+        msgErreur.innerHTML="Veuillez entrer un element valide";
         msgErreur.style.color="red";
         return false;
       }
@@ -114,7 +114,8 @@
     }
 
   // fonction qui construit le panier et calcule le montant de la commande
-  window.addEventListener("load", function() {
+  window.addEventListener("load", panierCommande());
+    function panierCommande() {
       //déclaration des variables
       let totalHT=0;
       let letotalHT="";
@@ -161,4 +162,4 @@
         lettc=document.getElementsByClassName("ttc");
         lettc[0].innerHTML=ttc+ " &euro;";
         localStorage.setItem("ttc", ttc);
-    });
+    }
